@@ -1,0 +1,7 @@
+#! /bin/bash
+
+read -p 'grep: ' search
+
+echo -ne "\033]0;grep: $search\007"
+
+vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":call Idesh_grep(\"$search\")"

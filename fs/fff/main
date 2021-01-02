@@ -1,0 +1,23 @@
+#!/bin/sh
+
+while [ $# -ne 0 ]; do
+    case $1 in
+        -c)
+            case $2 in
+                "fzy-cd")
+                        cmd=${2}
+                        shift 2
+                        ${IDESH_PATH}/fs/${IDESH_FS}/${IDESH_WM}/${cmd} $@
+		        exit $?
+                        ;;
+
+                       *)
+                        idesh-wm $@
+                        exit $?
+                        ;;
+            esac
+    esac
+    shift
+done
+
+${IDESH_PATH}/fs/${IDESH_FS}/fff

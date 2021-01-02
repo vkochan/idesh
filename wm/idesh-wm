@@ -1,0 +1,3 @@
+#!/bin/sh
+
+${IDESH_PATH}/wm/${IDESH_WM}/main $@

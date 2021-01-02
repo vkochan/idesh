@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# Description: Change directory of dvtm from nnn
+#
+# Shell: POSIX compliant
+# Authors: Vadym Kochan <vadimj@gmail.com>
+
+if [ -z "$DVTM_CMD_FIFO" ]; then
+    echo 'ERROR: $DVTM_CMD_FIFO is not set' | ${PAGER:-less}
+    exit 2
+fi
+
+CURRDIR=${PWD}
+
+if [ -n "${1}" ]; then
+    CURRDIR=${1}
+fi
+
+echo "setcwd ${CURRDIR}" > ${DVTM_CMD_FIFO}

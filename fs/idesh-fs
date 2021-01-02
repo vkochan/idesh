@@ -1,0 +1,3 @@
+#!/bin/sh
+
+${IDESH_PATH}/fs/${IDESH_FS}/main $@

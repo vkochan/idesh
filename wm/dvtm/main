@@ -1,0 +1,31 @@
+#!/bin/sh
+
+DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
+DVTM_SCRIPTS=${IDESH_PATH}/wm/dvtm
+
+while [ $# -ne 0 ]; do
+    case $1 in
+        -c)
+          cmd=${2}
+          shift 2
+          ${DVTM_SCRIPTS}/${cmd} $@
+	  exit $?
+          ;;
+    esac
+    shift
+done
+
+mkfifo ${DVTM_CMD_FIFO}
+
+printf "setmfact 0.25\ncreate idesh-fs\nsetsticky\n" > ${DVTM_CMD_FIFO} &
+
+DVTM_GIT_CMD=$(printf "^Xg:c:create tig git")
+DVTM_FS_SHOW_CMD=$(printf "^Xfs:c:create idesh-fs")
+DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh-fs -c fzy-open\" fzy-open")
+DVTM_GREP_CMD=$(printf "^Xfg:c:create \"idesh-gr\"")
+
+dvtm -c ${DVTM_CMD_FIFO} \
+	-b "${DVTM_GIT_CMD}" \
+	-b "${DVTM_FS_SHOW_CMD}" \
+	-b "${DVTM_FZ_OPEN_CMD}" \
+	-b "${DVTM_GREP_CMD}"

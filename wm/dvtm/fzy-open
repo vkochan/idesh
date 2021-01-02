@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+# Description: open file via dvtm found by fzy
+#
+# Shell: POSIX compliant
+# Author: Vadym Kochan
+
+if [ -z "$EDITOR" ]; then
+    echo 'ERROR: $EDITOR is not set' | ${PAGER:-less}
+    exit 2
+fi
+if [ -z "$DVTM_CMD_FIFO" ]; then
+    echo 'ERROR: $DVTM_CMD_FIFO is not set' | ${PAGER:-less}
+    exit 2
+fi
+
+printf "setlayout \"[ ]\"\n" > ${DVTM_CMD_FIFO}
+
+sel=$(find -type f | fzy -s -l 20)
+
+printf "setlayout\n" > ${DVTM_CMD_FIFO}
+
+if [ -n "${sel}" ]; then
+    idesh-wm -c open $sel
+fi

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+
+export IDESH_RUN_PATH=/var/run/user/${UID}/idesh/$$
+export IDESH_PATH=/usr/share/idesh
+export IDESH_WM=dvtm
+export IDESH_FS=fff
+
+trap 'rm -rf "$IDESH_RUN_PATH"' EXIT
+
+mkdir -p ${IDESH_RUN_PATH}
+
+idesh-wm

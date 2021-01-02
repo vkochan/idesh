@@ -1,0 +1,27 @@
+#!/bin/sh
+
+export NNN_PLUG="c:_idesh-fs -c setcwd*;f:_idesh-fs -c fzy-open*;d:_idesh-fs -c fzy-cd*"
+export NNN_OPENER="${IDESH_PATH}/wm/${IDESH_WM}/open"
+
+while [ $# -ne 0 ]; do
+    case $1 in
+        -c)
+            case $2 in
+                "fzy-cd")
+                        cmd=${2}
+                        shift 2
+                        ${IDESH_PATH}/fs/${IDESH_FS}/${IDESH_WM}/${cmd} $@
+		        exit $?
+                        ;;
+
+                       *)
+                        idesh-wm $@
+			echo idesh-wm $@ > /tmp/dbg
+                        exit $?
+                        ;;
+            esac
+    esac
+    shift
+done
+
+nnn -c
