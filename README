@@ -8,6 +8,8 @@ Requirements:
 
     3) vim (for grep support)
 
+    4) fzy (for fuzzy file find)
+
 
 Installation:
 
