@@ -22,5 +22,5 @@ printf "setlayout\n" > ${DVTM_CMD_FIFO}
 
 if [ -n "${sel}" ]; then
     path=$(readlink -f $sel)
-    idesh-wm -c setcwd $path
+    idesh wm -c setcwd $path
 fi

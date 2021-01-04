@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 #
 
-export IDESH_RUN_PATH=/var/run/user/${UID}/idesh/$$
-export IDESH_PATH=/usr/share/idesh
+IDESH_PREFIX=$(dirname "$(dirname $0)")
+
+export IDESH_RUN_PATH=${IDESH_RUN_PATH:=/var/run/user/${UID}/idesh/$$}
+export IDESH_PATH=${IDESH_PREFIX}/share/idesh
 export IDESH_WM=dvtm
 export IDESH_FS=fff
 
-trap 'rm -rf "$IDESH_RUN_PATH"' EXIT
-
 mkdir -p ${IDESH_RUN_PATH}
 
-idesh-wm
+while [ $# -ne 0 ]; do
+    case $1 in
+        wm|fs|gr)
+          mod=${1}
+          shift 1
+          ${IDESH_PATH}/${mod}/main $@
+	  exit $?
+          ;;
+    esac
+    shift
+done
+
+trap 'rm -rf "$IDESH_RUN_PATH"' EXIT
+${IDESH_PATH}/wm/main

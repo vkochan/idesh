@@ -14,7 +14,7 @@ $(FS):
 	$(MAKE) -C $@
 
 install: install-$(FS)
-	install -Dm 0755 idesh-fs ${DESTDIR}${PREFIX}/bin/idesh-fs
+	install -Dm 0755 main $(IDESH_PATH)/fs/main
 
 install-$(FS):
 	$(MAKE) -C $(FS) install

@@ -17,12 +17,12 @@ done
 
 mkfifo ${DVTM_CMD_FIFO}
 
-printf "setmfact 0.25\ncreate idesh-fs\nsetsticky\n" > ${DVTM_CMD_FIFO} &
+printf "setmfact 0.25\ncreate \"idesh fs\"\nsetsticky\n" > ${DVTM_CMD_FIFO} &
 
 DVTM_GIT_CMD=$(printf "^Xg:c:create tig git")
-DVTM_FS_SHOW_CMD=$(printf "^Xfs:c:create idesh-fs")
-DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh-fs -c fzy-open\" fzy-open")
-DVTM_GREP_CMD=$(printf "^Xfg:c:create \"idesh-gr\"")
+DVTM_FS_SHOW_CMD=$(printf "^Xfs:c:create \"idesh fs\"")
+DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs -c fzy-open\" fzy-open")
+DVTM_GREP_CMD=$(printf "^Xfg:c:create \"idesh gr\"")
 
 dvtm -c ${DVTM_CMD_FIFO} \
 	-b "${DVTM_GIT_CMD}" \

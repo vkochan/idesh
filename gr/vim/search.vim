@@ -1,6 +1,6 @@
 function Idesh_open()
     if $DVTM_CMD_FIFO != ''
-	call system(printf("idesh-wm -c open %s %d", expand('%:p'), line(".") + 1))
+	call system(printf("idesh wm -c open %s %d", expand('%:p'), line(".") + 1))
     endif
     bd
 endfunction

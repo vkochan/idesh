@@ -21,5 +21,5 @@ sel=$(find -type f | fzy -s -l 20)
 printf "setlayout\n" > ${DVTM_CMD_FIFO}
 
 if [ -n "${sel}" ]; then
-    idesh-wm -c open $sel
+    idesh wm -c open $sel
 fi

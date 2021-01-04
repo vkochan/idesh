@@ -9,7 +9,7 @@ $(WM):
 	$(MAKE) -C $@
 
 install: install-$(WM)
-	install -Dm 0755 idesh-wm ${DESTDIR}${PREFIX}/bin/idesh-wm
+	install -Dm 0755 main $(IDESH_PATH)/wm/main
 
 install-$(WM):
 	$(MAKE) -C $(WM) install
