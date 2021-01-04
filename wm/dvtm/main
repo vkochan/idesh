@@ -23,7 +23,7 @@ DVTM_GIT_VIEW_CMD=$(printf "^Xgv:c:create \"tig\" \"git: commits\"")
 DVTM_GIT_LOG_CMD=$(printf "^Xgl:c:create \"tig log\" \"git: log\"")
 DVTM_GIT_STATUS_CMD=$(printf "^Xgs:c:create \"tig status\" \"git: status\"")
 DVTM_GIT_REFS_CMD=$(printf "^Xgr:c:create \"tig refs\" \"git: refs\"")
-DVTM_FS_SHOW_CMD=$(printf "^Xfs:c:create \"idesh fs\"")
+DVTM_FS_SHOW_CMD=$(printf "^Xfm:c:create \"idesh fs\"")
 DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs -c fzy-open\" fzy-open")
 DVTM_GREP_CMD=$(printf "^Xfg:c:create \"idesh gr\"")
 
