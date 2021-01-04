@@ -1,8 +1,9 @@
-export IDESH_PATH = $(DESTDIR)/usr/share/idesh
+PREFIX ?= /usr/local
+
+export IDESH_PATH = $(DESTDIR)$(PREFIX)/share/idesh
 export INSTALL = install
 
 MODULES := wm fs gr
-PREFIX ?= /usr
 
 .PHONY: all install $(MODULES) install-modules $(foreach m,$(MODULES),install-$(m))
 
