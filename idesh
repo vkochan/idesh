@@ -6,7 +6,7 @@ IDESH_PREFIX=$(dirname "$(dirname $0)")
 export IDESH_RUN_PATH=${IDESH_RUN_PATH:=/var/run/user/${UID}/idesh/$$}
 export IDESH_PATH=${IDESH_PREFIX}/share/idesh
 export IDESH_WM=dvtm
-export IDESH_FS=fff
+export IDESH_FS=nnn
 
 mkdir -p ${IDESH_RUN_PATH}
 

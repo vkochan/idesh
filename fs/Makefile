@@ -1,11 +1,6 @@
-all:
-	@
+FS := fff nnn
 
-install:
-	@
-FS = fff
-
-.PHONY: all install $(FS) install-$(FS)
+.PHONY: all install $(FS) $(foreach fs,$(FS),install-$(FS))
 
 all: $(FS)
 	@
@@ -13,8 +8,11 @@ all: $(FS)
 $(FS):
 	$(MAKE) -C $@
 
-install: install-$(FS)
+install: $(foreach fs,$(FS),install-$(fs))
 	install -Dm 0755 main $(IDESH_PATH)/fs/main
 
-install-$(FS):
-	$(MAKE) -C $(FS) install
+install-fff:
+	$(MAKE) -C fff install
+
+install-nnn:
+	$(MAKE) -C nnn install
