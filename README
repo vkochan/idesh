@@ -1,0 +1,14 @@
+idesh - (IDE in Shell), based on Extended DVTM (EVTM) and VIM.
+
+Requirements:
+
+    1) bash
+
+    2) evtm - https://github.com/vkochan/evtm
+
+    3) vim (for grep support)
+
+
+Installation:
+
+    sudo make install
