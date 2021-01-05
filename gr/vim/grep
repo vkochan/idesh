@@ -1,0 +1,3 @@
+#!/bin/sh
+
+vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":call Idesh_grep(\"$1\")"
