@@ -10,17 +10,12 @@ export IDESH_FS=nnn
 
 mkdir -p ${IDESH_RUN_PATH}
 
-while [ $# -ne 0 ]; do
-    case $1 in
-        wm|fs|gr)
-          mod=${1}
-          shift 1
-          ${IDESH_PATH}/${mod}/main $@
-	  exit $?
-          ;;
-    esac
-    shift
-done
+if [ $# -ne 0 ]; then
+    mod=${1}
+    shift 1
+    ${IDESH_PATH}/${mod}/main $@
+    exit $?
+fi
 
 trap 'rm -rf "$IDESH_RUN_PATH"' EXIT
 ${IDESH_PATH}/wm/main

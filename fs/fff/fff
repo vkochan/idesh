@@ -605,13 +605,13 @@ open() {
 
                 clear_screen
                 reset_terminal
-                idesh wm -c open "$1"
+                idesh wm open "$1"
                 setup_terminal
                 redraw
             ;;
 
             *)
-                idesh wm -c open "$1"
+                idesh wm open "$1"
             ;;
         esac
     fi
@@ -1039,7 +1039,7 @@ key() {
 
         # Change idesh CWD to current one.
         ${FFF_KEY_IDESH_CWD:=C})
-            idesh wm -c setcwd "$PWD"
+            idesh wm setcwd "$PWD"
         ;;
 
         # Directory favourites.

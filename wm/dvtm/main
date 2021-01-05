@@ -4,17 +4,12 @@ export DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
 export DVTM_EVT_FIFO=${IDESH_RUN_PATH}/dvtm-evt-fifo
 DVTM_SCRIPTS=${IDESH_PATH}/wm/dvtm
 
-while [ $# -ne 0 ]; do
-    case $1 in
-        -c)
-          cmd=${2}
-          shift 2
-          ${DVTM_SCRIPTS}/${cmd} $@
-	  exit $?
-          ;;
-    esac
-    shift
-done
+if [ $# -ne 0 ]; then
+    cmd=${1}
+    shift 1
+    ${DVTM_SCRIPTS}/${cmd} $@
+    exit $?
+fi
 
 mkfifo ${DVTM_CMD_FIFO}
 mkfifo ${DVTM_EVT_FIFO}
@@ -26,7 +21,7 @@ DVTM_GIT_LOG_CMD=$(printf "^Xvl:c:create \"tig log\" \"git: log\"")
 DVTM_GIT_STATUS_CMD=$(printf "^Xvs:c:create \"tig status\" \"git: status\"")
 DVTM_GIT_REFS_CMD=$(printf "^Xvr:c:create \"tig refs\" \"git: refs\"")
 DVTM_FS_SHOW_CMD=$(printf "^Xft:c:create \"idesh fs\"")
-DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs -c fzy-open\" fzy-open")
+DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs fzy-open\" fzy-open")
 DVTM_GREP_CMD=$(printf "^Xfs:c:create \"idesh gr\"")
 
 mkdir ${IDESH_RUN_PATH}/tag
