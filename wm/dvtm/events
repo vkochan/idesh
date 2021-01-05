@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# Description: Handles events from DVTM
+#
+# Shell: POSIX compliant
+# Authors: Vadym Kochan <vadimj@gmail.com>
+
+if [ -z "$DVTM_CMD_FIFO" ]; then
+    echo 'ERROR: $DVTM_CMD_FIFO is not set' | ${PAGER:-less}
+    exit 2
+fi
+if [ -z "$DVTM_EVT_FIFO" ]; then
+    echo 'ERROR: $DVTM_EVT_FIFO is not set' | ${PAGER:-less}
+    exit 2
+fi
+
+cat "$DVTM_EVT_FIFO" |\
+	while read -r evt; do
+            set -- $evt
+
+            while [ $# -gt 0 ]
+            do
+                case $1 in
+                    "curtag")
+                             if [ -n "$2" ]; then
+                                 ln -sfn ${IDESH_RUN_PATH}/tag/$2 ${IDESH_RUN_PATH}/tag/current
+                                 shift
+                             fi
+                             ;;
+                esac
+                shift
+            done
+	done

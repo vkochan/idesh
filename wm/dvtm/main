@@ -1,6 +1,7 @@
 #!/bin/sh
 
-DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
+export DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
+export DVTM_EVT_FIFO=${IDESH_RUN_PATH}/dvtm-evt-fifo
 DVTM_SCRIPTS=${IDESH_PATH}/wm/dvtm
 
 while [ $# -ne 0 ]; do
@@ -16,6 +17,7 @@ while [ $# -ne 0 ]; do
 done
 
 mkfifo ${DVTM_CMD_FIFO}
+mkfifo ${DVTM_EVT_FIFO}
 
 printf "setmfact 0.25\ncreate \"idesh fs\"\nsetsticky\n" > ${DVTM_CMD_FIFO} &
 
@@ -27,7 +29,19 @@ DVTM_FS_SHOW_CMD=$(printf "^Xfm:c:create \"idesh fs\"")
 DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs -c fzy-open\" fzy-open")
 DVTM_GREP_CMD=$(printf "^Xfg:c:create \"idesh gr\"")
 
-dvtm -c ${DVTM_CMD_FIFO} \
+mkdir ${IDESH_RUN_PATH}/tag
+
+for t in {1..5}; do
+    mkdir ${IDESH_RUN_PATH}/tag/$t
+    ln -sf ${PWD} ${IDESH_RUN_PATH}/tag/$t/cwd
+done
+
+ln -sf ${IDESH_RUN_PATH}/tag/1 ${IDESH_RUN_PATH}/tag/current
+
+${IDESH_PATH}/wm/${IDESH_WM}/events &
+DVTM_EVENTS_PID=$!
+
+dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO}\
 	-b "${DVTM_GIT_VIEW_CMD}" \
 	-b "${DVTM_GIT_LOG_CMD}" \
 	-b "${DVTM_GIT_STATUS_CMD}" \
@@ -35,3 +49,5 @@ dvtm -c ${DVTM_CMD_FIFO} \
 	-b "${DVTM_FS_SHOW_CMD}" \
 	-b "${DVTM_FZ_OPEN_CMD}" \
 	-b "${DVTM_GREP_CMD}"
+
+kill ${DVTM_EVENTS_PID} 2> /dev/null

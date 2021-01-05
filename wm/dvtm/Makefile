@@ -1,4 +1,4 @@
-DVTM_SCRIPTS = main fzy-open main open setcwd
+DVTM_SCRIPTS = main fzy-open main open setcwd events
 
 .PHONY: all
 
