@@ -16,7 +16,7 @@ fi
 
 printf "setlayout \"[ ]\"\n" > ${DVTM_CMD_FIFO}
 
-sel=$(find -type f | fzy -s -l 20)
+sel=$(find -type f -not \( -path '*/\.git/*' -prune \) | fzy -s -l 20)
 
 printf "setlayout\n" > ${DVTM_CMD_FIFO}
 
