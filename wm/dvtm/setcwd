@@ -17,3 +17,4 @@ if [ -n "${1}" ]; then
 fi
 
 echo "setcwd ${CURRDIR}" > ${DVTM_CMD_FIFO}
+ln -nsf ${CURRDIR} ${IDESH_RUN_PATH}/tag/current/cwd

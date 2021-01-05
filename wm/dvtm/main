@@ -1,5 +1,6 @@
 #!/bin/sh
 
+export DVTM_STATUS_FIFO=${IDESH_RUN_PATH}/dvtm-status-fifo
 export DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
 export DVTM_EVT_FIFO=${IDESH_RUN_PATH}/dvtm-evt-fifo
 DVTM_SCRIPTS=${IDESH_PATH}/wm/dvtm
@@ -11,6 +12,7 @@ if [ $# -ne 0 ]; then
     exit $?
 fi
 
+mkfifo ${DVTM_STATUS_FIFO}
 mkfifo ${DVTM_CMD_FIFO}
 mkfifo ${DVTM_EVT_FIFO}
 
@@ -28,15 +30,23 @@ mkdir ${IDESH_RUN_PATH}/tag
 
 for t in {1..5}; do
     mkdir ${IDESH_RUN_PATH}/tag/$t
-    ln -sf ${PWD} ${IDESH_RUN_PATH}/tag/$t/cwd
+    ln -nsf ${PWD} ${IDESH_RUN_PATH}/tag/$t/cwd
 done
 
-ln -sf ${IDESH_RUN_PATH}/tag/1 ${IDESH_RUN_PATH}/tag/current
+ln -nsf ${IDESH_RUN_PATH}/tag/1 ${IDESH_RUN_PATH}/tag/current
+
+while true; do
+    cwd=$(realpath ${IDESH_RUN_PATH}/tag/current/cwd)
+    cwd="${cwd/#$HOME/\~}"
+    echo "$cwd"
+    sleep 2
+done > ${DVTM_STATUS_FIFO} &
+DVTM_STATUS_PID=$!
 
 ${IDESH_PATH}/wm/${IDESH_WM}/events &
 DVTM_EVENTS_PID=$!
 
-dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO}\
+dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO} -s ${DVTM_STATUS_FIFO} \
 	-b "${DVTM_GIT_VIEW_CMD}" \
 	-b "${DVTM_GIT_LOG_CMD}" \
 	-b "${DVTM_GIT_STATUS_CMD}" \
@@ -46,3 +56,4 @@ dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO}\
 	-b "${DVTM_GREP_CMD}"
 
 kill ${DVTM_EVENTS_PID} 2> /dev/null
+kill ${DVTM_STATUS_PID} 2> /dev/null
