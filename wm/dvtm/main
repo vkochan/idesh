@@ -37,8 +37,10 @@ ln -nsf ${IDESH_RUN_PATH}/tag/1 ${IDESH_RUN_PATH}/tag/current
 
 while true; do
     cwd=$(realpath ${IDESH_RUN_PATH}/tag/current/cwd)
+    branch="$(git --git-dir="${cwd}/.git" rev-parse --abbrev-ref HEAD 2> /dev/null)"
+    [ -n "${branch}" ] && branch=" (${branch})"
     cwd="${cwd/#$HOME/\~}"
-    echo "$cwd"
+    echo "$cwd$branch"
     sleep 2
 done > ${DVTM_STATUS_FIFO} &
 DVTM_STATUS_PID=$!
