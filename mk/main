@@ -13,11 +13,36 @@ fi
 
 tmpfile=$(mktemp /tmp/idesh-mk.XXXXXX)
 
-set -o pipefail
-sh -c "./$@" 2>&1 | tee $tmpfile
-if [ $? -ne 0 ]; then
-vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
+mime_type="*"
+
+if [ -e "$PWD/$1" ]; then
+    mime_type=$(file -biL $1 2>/dev/null)
 fi
+
+set -o pipefail
+
+case $mime_type in
+    *x-makefile*)
+               sh -c "make $@" 2>&1 | tee $tmpfile
+	       echo "make $@" > /tmp/dbg
+               ;;
+
+              *)
+               if [ -e "$1" ]; then
+                   sh -c "./$@" 2>&1 | tee $tmpfile
+               else
+                   sh -c "$@" 2>&1 | tee $tmpfile
+               fi
+               ;;
+esac
+
+if [ $? -ne 0 ]; then
+    vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
+else
+    echo "[Press ENTER for exit]"
+    read
+fi
+
 set +o pipefail
 
 rm $tmpfile
