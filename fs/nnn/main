@@ -2,6 +2,7 @@
 
 export NNN_PLUG='m:_idesh mk $nnn*;s:_idesh gr*;c:_idesh fs setcwd*;f:_idesh fs fzy-open*;d:_idesh fs fzy-cd*'
 export NNN_OPENER="${IDESH_PATH}/wm/${IDESH_WM}/open"
+export NNN_SEL=${IDESH_RUN_PATH}/nnn-sel-$$
 
 while [ $# -ne 0 ]; do
     case $1 in
