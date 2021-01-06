@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export NNN_PLUG='m:_idesh mk $nnn*;s:_idesh gr*;C:_idesh fs setcwd*;f:_idesh fs fzy-open*;d:_idesh fs fzy-cd*'
+export NNN_PLUG='w:_idesh fs gocwd*;m:_idesh mk $nnn*;s:_idesh gr*;C:_idesh fs setcwd*;f:_idesh fs fzy-open*;d:_idesh fs fzy-cd*'
 export NNN_OPENER="${IDESH_PATH}/wm/${IDESH_WM}/open"
 export NNN_SEL=${IDESH_RUN_PATH}/nnn-sel-$$
 
@@ -10,6 +10,12 @@ while [ $# -ne 0 ]; do
 		cmd=${1}
 		shift 1
 		${IDESH_PATH}/fs/${IDESH_FS}/${IDESH_WM}/${cmd} $@
+		exit $?
+		;;
+	"gocwd")
+		cmd=${1}
+		shift 1
+		${IDESH_PATH}/fs/${IDESH_FS}/${cmd} $@
 		exit $?
 		;;
 

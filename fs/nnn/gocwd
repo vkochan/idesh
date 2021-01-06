@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Description: cd to cwd of current tag
+#
+# Shell: POSIX compliant
+# Author: Vadym Kochan
+
+if [ -z "$NNN_PIPE" ]; then
+    echo 'ERROR: $NNN_PIPE is not set' | ${PAGER:-less}
+    exit 2
+fi
+
+cwd=$(realpath ${IDESH_RUN_PATH}/tag/current/cwd)
+printf "0c$cwd" > "$NNN_PIPE"
