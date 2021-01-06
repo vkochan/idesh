@@ -1,9 +1,20 @@
 #!/bin/bash
 
+if [ -n "${NNN_PLUG}" ]; then
+    idesh wm create "idesh mk -c $PWD $@"
+    exit
+fi
+
+if [ "$1" == "-c" ]; then
+    cwd=$2
+    cd $cwd
+    shift 2
+fi
+
 tmpfile=$(mktemp /tmp/idesh-mk.XXXXXX)
 
 set -o pipefail
-sh -c "$@" 2>&1 | tee $tmpfile
+sh -c "./$@" 2>&1 | tee $tmpfile
 if [ $? -ne 0 ]; then
 vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
 fi
