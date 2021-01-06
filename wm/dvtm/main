@@ -16,7 +16,7 @@ mkfifo ${DVTM_STATUS_FIFO}
 mkfifo ${DVTM_CMD_FIFO}
 mkfifo ${DVTM_EVT_FIFO}
 
-printf "setmfact 0.25\ncreate \"idesh fs\"\nsetsticky\n" > ${DVTM_CMD_FIFO} &
+printf "setstatus align left\nsetmfact 0.25\ncreate \"idesh fs\"\nsetsticky\n" > ${DVTM_CMD_FIFO} &
 
 DVTM_GIT_VIEW_CMD=$(printf "^Xvv:c:create \"tig\" \"git: commits\"")
 DVTM_GIT_LOG_CMD=$(printf "^Xvl:c:create \"tig log\" \"git: log\"")
