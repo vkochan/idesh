@@ -1,5 +1,17 @@
 #!/bin/bash
 
+status_char=( '-' '\' '|' '/' )
+
+progress() {
+    while true; do
+        for i in "${status_char[@]}"
+        do
+            echo -ne "\033]0;mk: $@ [$i] ...\007"
+	    sleep 0.5
+        done
+    done
+}
+
 if [ -n "${NNN_PLUG}" ]; then
     idesh wm create "idesh mk -c $PWD $@"
     exit
@@ -27,6 +39,9 @@ while true; do
 
     echo -ne "\033]0;mk: $@ ...\007"
 
+    progress "$@" &
+    status_pid=$!
+
     case $mime_type in
         *x-makefile*)
                     sh -c "make -f $@" 2>&1 | tee $tmpfile
@@ -40,6 +55,8 @@ while true; do
                     fi
                     ;;
     esac
+
+    kill $status_pid
 
     if [ $? -ne 0 ]; then
         echo -ne "\033]0;mk: $@ [ERROR]\007"
