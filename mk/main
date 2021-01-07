@@ -23,7 +23,7 @@ set -o pipefail
 
 case $mime_type in
     *x-makefile*)
-               sh -c "make $@" 2>&1 | tee $tmpfile
+               sh -c "make -f $@" 2>&1 | tee $tmpfile
 	       echo "make $@" > /tmp/dbg
                ;;
 
