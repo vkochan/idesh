@@ -21,27 +21,30 @@ fi
 
 set -o pipefail
 
-case $mime_type in
-    *x-makefile*)
-               sh -c "make -f $@" 2>&1 | tee $tmpfile
-               ;;
+trap "rm -f $tmpfile; exit;" SIGINT SIGTERM
 
-              *)
-               if [ -e "$1" ]; then
-                   sh -c "./$@" 2>&1 | tee $tmpfile
-               else
-                   sh -c "$@" 2>&1 | tee $tmpfile
-               fi
-               ;;
-esac
+while true; do
 
-if [ $? -ne 0 ]; then
-    vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
-else
-    echo "[Press ENTER for exit]"
+    case $mime_type in
+        *x-makefile*)
+                    sh -c "make -f $@" 2>&1 | tee $tmpfile
+                    ;;
+
+                   *)
+                    if [ -e "$1" ]; then
+                        sh -c "./$@" 2>&1 | tee $tmpfile
+                    else
+                        sh -c "$@" 2>&1 | tee $tmpfile
+                    fi
+                    ;;
+    esac
+
+    if [ $? -ne 0 ]; then
+        vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
+    fi
+
+    echo "[Press ENTER to continue, Ctrl-C for exit]"
     read
-fi
+done
 
-set +o pipefail
-
-rm $tmpfile
+rm -f $tmpfile
