@@ -25,6 +25,8 @@ trap "rm -f $tmpfile; exit;" SIGINT SIGTERM
 
 while true; do
 
+    echo -ne "\033]0;mk: $@ ...\007"
+
     case $mime_type in
         *x-makefile*)
                     sh -c "make -f $@" 2>&1 | tee $tmpfile
@@ -40,7 +42,10 @@ while true; do
     esac
 
     if [ $? -ne 0 ]; then
+        echo -ne "\033]0;mk: $@ [ERROR]\007"
         vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
+    else
+        echo -ne "\033]0;mk: $@ [OK]\007"
     fi
 
     echo "[Press ENTER to continue, Ctrl-C for exit]"
