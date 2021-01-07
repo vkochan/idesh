@@ -17,11 +17,23 @@ if [ -n "${NNN_PLUG}" ]; then
     exit
 fi
 
-if [ "$1" == "-c" ]; then
-    cwd=$2
-    cd $cwd
-    shift 2
-fi
+options_prompt=n
+
+while [ $# -gt 0 ]; do
+    case $1 in
+        -c)
+           cd $2
+           shift 1
+	   ;;
+        -p)
+           options_prompt=y
+	   ;;
+	 *)
+           break
+           ;;
+    esac
+    shift 1
+done
 
 tmpfile=$(mktemp /tmp/idesh-mk.XXXXXX)
 
@@ -35,38 +47,54 @@ set -o pipefail
 
 trap "rm -f $tmpfile; exit;" SIGINT SIGTERM
 
+options=""
+
 while true; do
+    echo -ne "\033]0;mk: $@ $options ...\007"
 
-    echo -ne "\033]0;mk: $@ ...\007"
+    if [ "${options_prompt}" == "y" ]; then
+        read -p "options: " options
+	options_prompt=n
+    fi
 
-    progress "$@" &
+    cmdl="$@ $options"
+
+    progress "$cmdl" &
     status_pid=$!
 
     case $mime_type in
         *x-makefile*)
-                    sh -c "make -f $@" 2>&1 | tee $tmpfile
+                    sh -c "make -f $cmdl" 2>&1 | tee $tmpfile
+                    ret=$?
                     ;;
 
                    *)
                     if [ -e "$1" ]; then
-                        sh -c "./$@" 2>&1 | tee $tmpfile
+                        sh -c "./$cmdl" 2>&1 | tee $tmpfile
+                        ret=$?
                     else
-                        sh -c "$@" 2>&1 | tee $tmpfile
+                        sh -c "$cmdl" 2>&1 | tee $tmpfile
+                        ret=$?
                     fi
                     ;;
     esac
 
     kill $status_pid
 
-    if [ $? -ne 0 ]; then
-        echo -ne "\033]0;mk: $@ [ERROR]\007"
+    if [ $ret -ne 0 ]; then
+        echo -ne "\033]0;mk: $cmdl [ERROR]\007"
         vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
     else
-        echo -ne "\033]0;mk: $@ [OK]\007"
+        echo -ne "\033]0;mk: $cmdl [OK]\007"
     fi
 
-    echo "[Press ENTER to continue, Ctrl-C for exit]"
-    read
+    echo "[Press ENTER to continue, 'c' change command line options, Ctrl-C for exit]"
+    read -n1 key
+
+    if [ "$key" == "c" ]; then
+        options_prompt="y"
+        echo ""
+    fi
 done
 
 rm -f $tmpfile
