@@ -28,4 +28,4 @@ while [ $# -ne 0 ]; do
 done
 
 export EDITOR="idesh wm open"
-nnn -c
+nnn -cu
