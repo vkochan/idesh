@@ -1,6 +1,6 @@
 .PHONY: all install
 
-all: xx
+all:
 	@
 
 install:
