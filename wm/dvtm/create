@@ -10,4 +10,4 @@ if [ -z "$DVTM_CMD_FIFO" ]; then
     exit 2
 fi
 
-echo "create \"${@}\"" > ${DVTM_CMD_FIFO}
+echo "create \"${@}\" \"\" $CWD" > ${DVTM_CMD_FIFO}
