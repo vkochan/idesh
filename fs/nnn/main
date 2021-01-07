@@ -27,4 +27,5 @@ while [ $# -ne 0 ]; do
     shift
 done
 
+export EDITOR="idesh wm open"
 nnn -c
