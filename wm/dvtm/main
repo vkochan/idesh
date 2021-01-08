@@ -18,10 +18,10 @@ mkfifo ${DVTM_EVT_FIFO}
 
 printf "setminimized align vert\nsetstatus align left\nsetmfact 0.25\ncreate \"idesh fs\"\nsetsticky\n" > ${DVTM_CMD_FIFO} &
 
-DVTM_GIT_VIEW_CMD=$(printf "^Xvv:c:create \"tig\" \"git: commits\"")
-DVTM_GIT_LOG_CMD=$(printf "^Xvl:c:create \"tig log\" \"git: log\"")
-DVTM_GIT_STATUS_CMD=$(printf "^Xvs:c:create \"tig status\" \"git: status\"")
-DVTM_GIT_REFS_CMD=$(printf "^Xvr:c:create \"tig refs\" \"git: refs\"")
+DVTM_GIT_VIEW_CMD=$(printf "^Xgv:c:create \"tig\" \"git: commits\"")
+DVTM_GIT_LOG_CMD=$(printf "^Xgl:c:create \"tig log\" \"git: log\"")
+DVTM_GIT_STATUS_CMD=$(printf "^Xgs:c:create \"tig status\" \"git: status\"")
+DVTM_GIT_REFS_CMD=$(printf "^Xgr:c:create \"tig refs\" \"git: refs\"")
 DVTM_FS_SHOW_CMD=$(printf "^Xft:c:create \"idesh fs\"")
 DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs fzy-open\" fzy-open")
 DVTM_GREP_CMD=$(printf "^Xfs:c:create \"idesh gr\"")
