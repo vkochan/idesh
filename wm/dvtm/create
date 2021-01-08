@@ -10,4 +10,11 @@ if [ -z "$DVTM_CMD_FIFO" ]; then
     exit 2
 fi
 
-echo "create \"${@}\" \"\" $CWD" > ${DVTM_CMD_FIFO}
+cwd='$CWD'
+
+if [ "${1}" == "-c" ]; then
+   cwd=$2 
+   shift 2
+fi
+
+echo "create \"${@}\" \"\" $cwd" > ${DVTM_CMD_FIFO}

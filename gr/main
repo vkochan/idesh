@@ -2,10 +2,8 @@
 
 read -p 'grep: ' search
 
-echo -ne "\033]0;grep: $search\007"
-
 if [ -z "${NNN_PLUG}" ]; then
     ${IDESH_PATH}/gr/vim/grep "$search"
 else
-    idesh wm create "${IDESH_PATH}/gr/vim/grep $search"
+    idesh wm create -c "${PWD}" "${IDESH_PATH}/gr/vim/grep $search"
 fi
