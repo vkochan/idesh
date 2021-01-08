@@ -28,7 +28,7 @@ DVTM_GREP_CMD=$(printf "^Xfs:c:create \"idesh gr\"")
 
 mkdir ${IDESH_RUN_PATH}/tag
 
-for t in {1..5}; do
+for t in {1..9}; do
     mkdir ${IDESH_RUN_PATH}/tag/$t
     ln -nsf ${PWD} ${IDESH_RUN_PATH}/tag/$t/cwd
 done
