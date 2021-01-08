@@ -1,7 +1,7 @@
 function Idesh_open()
-    if $DVTM_CMD_FIFO != ''
-	call system(printf("idesh wm open %s %d", expand('%:p'), line(".") + 1))
-    endif
+    let l:erridx = getqflist({'idx' : 0 }).idx
+    let l:lnum = get(getqflist(), l:erridx - 1).lnum
+    call system(printf("idesh wm open %s %d", expand('%:p'), l:lnum))
     bd
 endfunction
 
