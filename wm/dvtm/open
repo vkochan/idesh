@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Description: Open selected file in new DVTM window
 #
@@ -20,6 +20,6 @@ else
     line=""
 fi
 
-title="../$(basename $(dirname $1))/$(basename $1)"
+title="${1/#${PWD}/\.}"
 
 printf "create \"$EDITOR ${1}${line}\" ${title}\n" > ${DVTM_CMD_FIFO}
