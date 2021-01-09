@@ -6,7 +6,7 @@ progress() {
     while true; do
         for i in "${status_char[@]}"
         do
-            echo -ne "\033]0;mk: $@ [$i] ...\007"
+	    idesh wm title "mk: $@ [$i] ..."
 	    sleep 0.5
         done
     done
@@ -50,7 +50,7 @@ trap "rm -f $tmpfile; exit;" SIGINT SIGTERM
 options=""
 
 while true; do
-    echo -ne "\033]0;mk: $@ $options ...\007"
+    idesh wm title "mk: $@ $options ..."
 
     if [ "${options_prompt}" == "y" ]; then
         read -p "options: " options
@@ -82,10 +82,10 @@ while true; do
     kill $status_pid
 
     if [ $ret -ne 0 ]; then
-        echo -ne "\033]0;mk: $cmdl [ERROR]\007"
+	idesh wm title "mk: $cmdl [ERROR]"
         vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
     else
-        echo -ne "\033]0;mk: $cmdl [OK]\007"
+	idesh wm title "mk: $cmdl [OK]"
     fi
 
     echo "[Press ENTER to continue, 'c' change command line options, Ctrl-C for exit]"

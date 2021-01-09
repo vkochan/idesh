@@ -1,4 +1,5 @@
 #!/bin/sh
 
-echo -ne "\033]0;grep: $1\007"
+idesh wm title "grep: $1"
+
 vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":call Idesh_grep(\"$1\")"
