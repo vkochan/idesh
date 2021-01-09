@@ -24,6 +24,10 @@ setmfact 0.25
 create "idesh fs"
 setsticky
 EOF
+
+if [ -x "${IDESH_INIT_CMD}" ]; then
+    sh -c ${IDESH_INIT_CMD}
+fi
 }
 
 dvtm_init &
