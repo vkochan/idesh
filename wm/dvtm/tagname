@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# Description: set tag name
+#
+# Shell: POSIX compliant
+# Authors: Vadym Kochan <vadimj@gmail.com>
+
+if [ -z "$DVTM_CMD_FIFO" ]; then
+    echo 'ERROR: $DVTM_CMD_FIFO is not set' | ${PAGER:-less}
+    exit 2
+fi
+
+echo "tagname $1 $2" > ${DVTM_CMD_FIFO}
