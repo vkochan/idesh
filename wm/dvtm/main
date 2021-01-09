@@ -16,7 +16,17 @@ mkfifo ${DVTM_STATUS_FIFO}
 mkfifo ${DVTM_CMD_FIFO}
 mkfifo ${DVTM_EVT_FIFO}
 
-printf "setminimized align vert\nsetstatus align left\nsetmfact 0.25\ncreate \"idesh fs\"\nsetsticky\n" > ${DVTM_CMD_FIFO} &
+dvtm_init() {
+cat << EOF > ${DVTM_CMD_FIFO}
+setminimized align vert
+setstatus align left
+setmfact 0.25
+create "idesh fs"
+setsticky
+EOF
+}
+
+dvtm_init &
 
 DVTM_GIT_VIEW_CMD=$(printf "^Xgv:c:create \"tig\" \"git: commits\"")
 DVTM_GIT_LOG_CMD=$(printf "^Xgl:c:create \"tig log\" \"git: log\"")
