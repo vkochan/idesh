@@ -1,4 +1,4 @@
-DVTM_SCRIPTS = main create fzy-open main open setcwd events title tagname
+DVTM_SCRIPTS = main create fzy-open main open setcwd events title tagname shell
 
 .PHONY: all
 
