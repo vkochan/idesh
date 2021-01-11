@@ -12,7 +12,7 @@ function Idesh_qfix()
 endfunction
 
 function Idesh_grep(search)
-    execute "silent! grep! -srnw --binary-files=without-match --exclude-dir=.git . -e " . a:search . " "
+    execute "silent! grep! -srn --binary-files=without-match --exclude-dir=.git . -e " . a:search . " "
 endfunction
 
 autocmd QuickFixCmdPost * call Idesh_qfix()
