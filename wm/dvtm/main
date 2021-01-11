@@ -20,13 +20,13 @@ dvtm_init() {
 cat << EOF > ${DVTM_CMD_FIFO}
 setminimized align vert
 setstatus align left
-setmfact 0.25
-create "idesh fs"
-setsticky
 EOF
 
-if [ -x "${IDESH_INIT_CMD}" ]; then
-    sh -c ${IDESH_INIT_CMD}
+if [ -n "${IDESH_INIT_CMD}" ]; then
+    echo "${IDESH_INIT_CMD}" > ${DVTM_CMD_FIFO}
+fi
+if [ -n "${IDESH_INIT_SCRIPT}" ]; then
+    sh -c "${IDESH_INIT_SCRIPT}"
 fi
 }
 
