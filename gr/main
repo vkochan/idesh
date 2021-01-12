@@ -1,6 +1,23 @@
 #! /bin/bash
 
-read -p 'grep: ' search
+mkdir -p ${HOME}/.cache/idesh
+IDESH_GREP_RECENT=${HOME}/.cache/idesh/search
+
+touch ${IDESH_GREP_RECENT}
+
+grep_recent() {
+    READLINE_LINE=$(cat ${IDESH_GREP_RECENT} | fzy)
+}
+bind -x '"\C-r":grep_recent' 2> /dev/null
+
+echo "[Ctrl-R to select recent searched words]"
+read -e -p 'grep: ' search
+
+if [ -s ${IDESH_GREP_RECENT} ]; then
+    sed -i -e "0,/^/s//${search}\n/;20d" ${IDESH_GREP_RECENT}
+else
+    echo ${search} > ${IDESH_GREP_RECENT}
+fi
 
 if [ -z "${NNN_PLUG}" ]; then
     ${IDESH_PATH}/gr/vim/grep "$search"
