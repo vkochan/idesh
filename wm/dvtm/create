@@ -10,7 +10,7 @@ if [ -z "$DVTM_CMD_FIFO" ]; then
     exit 2
 fi
 
-cwd='$CWD'
+cwd="$PWD"
 
 if [ "${1}" == "-c" ]; then
    cwd=$2 

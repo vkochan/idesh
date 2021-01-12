@@ -1,7 +1,9 @@
 #! /bin/bash
 
-mkdir -p ${HOME}/.cache/idesh
-IDESH_GREP_RECENT=${HOME}/.cache/idesh/search
+idesh wm title "grep:"
+
+mkdir -p ${HOME}/.cache/idesh/search
+IDESH_GREP_RECENT=${HOME}/.cache/idesh/search/recent
 
 touch ${IDESH_GREP_RECENT}
 
@@ -10,8 +12,23 @@ grep_recent() {
 }
 bind -x '"\C-r":grep_recent' 2> /dev/null
 
+IDESH_GREP_CMD="grep -rnI --exclude-dir=.git"
+
 echo "[Ctrl-R to select recent searched words]"
+echo ""
 read -e -p 'grep: ' search
+
+idesh wm title "grep: $search"
+
+IDESH_GREP_TMP=/tmp/idesh-grep.$$
+
+${IDESH_GREP_CMD} ${search} > ${IDESH_GREP_TMP}
+if [ $? -ne 0 ]; then
+    rm -f ${IDESH_GREP_TMP}
+    echo "No matches found :-(, press Enter to exit"
+    read
+    exit
+fi
 
 if [ -s ${IDESH_GREP_RECENT} ]; then
     sed -i -e "0,/^/s//${search}\n/;20d" ${IDESH_GREP_RECENT}
@@ -19,11 +36,7 @@ else
     echo ${search} > ${IDESH_GREP_RECENT}
 fi
 
-sort ${IDESH_GREP_RECENT} | uniq > ${HOME}/.cache/idesh/search.$$
-mv ${HOME}/.cache/idesh/search.$$ ${IDESH_GREP_RECENT}
+sort ${IDESH_GREP_RECENT} | uniq > ${HOME}/.cache/idesh/search/recent.$$
+mv ${HOME}/.cache/idesh/search/recent.$$ ${IDESH_GREP_RECENT}
 
-if [ -z "${NNN_PLUG}" ]; then
-    ${IDESH_PATH}/gr/vim/grep "$search"
-else
-    idesh wm create -c "${PWD}" "${IDESH_PATH}/gr/vim/grep $search"
-fi
+vim -S ${IDESH_PATH}/gr/vim/qfix.vim -c ":cfile ${IDESH_GREP_TMP}"

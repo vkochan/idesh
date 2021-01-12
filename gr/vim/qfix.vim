@@ -11,8 +11,4 @@ function Idesh_qfix()
     execute 'only'
 endfunction
 
-function Idesh_grep(search)
-    execute "silent! grep! -srn --binary-files=without-match --exclude-dir=.git . -e " . a:search . " "
-endfunction
-
 autocmd QuickFixCmdPost * call Idesh_qfix()

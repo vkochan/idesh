@@ -4,6 +4,5 @@ all:
 	@
 
 install:
-	$(INSTALL) -D vim/search.vim $(IDESH_PATH)/gr/vim/search.vim
-	$(INSTALL) -Dm 0755 vim/grep $(IDESH_PATH)/gr/vim/grep
+	$(INSTALL) -D vim/qfix.vim $(IDESH_PATH)/gr/vim/qfix.vim
 	$(INSTALL) -Dm 0755 main $(IDESH_PATH)/gr/main
