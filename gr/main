@@ -19,6 +19,9 @@ else
     echo ${search} > ${IDESH_GREP_RECENT}
 fi
 
+sort ${IDESH_GREP_RECENT} | uniq > ${HOME}/.cache/idesh/search.$$
+mv ${HOME}/.cache/idesh/search.$$ ${IDESH_GREP_RECENT}
+
 if [ -z "${NNN_PLUG}" ]; then
     ${IDESH_PATH}/gr/vim/grep "$search"
 else
