@@ -20,6 +20,6 @@ else
     line=""
 fi
 
-title="${1/#${PWD}/\.}"
+title="${1/#${PWD}\//}"
 
 printf "create \"$EDITOR ${1}${line}\" ${title}\n" > ${DVTM_CMD_FIFO}
