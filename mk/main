@@ -2,11 +2,29 @@
 
 status_char=( '-' '\' '|' '/' )
 
+# $1 - how many passed
+print_time() {
+    passed=$1
+
+    hrs=$((passed / 3600))
+    min=$(((passed - hrs * 3600) / 60))
+    sec=$((passed - hrs * 3600 - min * 60))
+    echo "${hrs}h:${min}m:${sec}s"
+}
+
+# $1 - start time
+# $2 - cmd line
 progress() {
+    start_time=$1
+    shift 1
+
     while true; do
         for i in "${status_char[@]}"
         do
-	    idesh wm title "mk: $@ [$i] ..."
+            passed=$((SECONDS - start_time))
+	    time_lbl=$(print_time $passed)
+
+	    idesh wm title "mk: $@ ($time_lbl) [$i] ..."
 	    sleep 0.5
         done
     done
@@ -59,7 +77,9 @@ while true; do
 
     cmdl="$@ $options"
 
-    progress "$cmdl" &
+    start_time=$SECONDS
+
+    progress "$start_time" "$cmdl" &
     status_pid=$!
 
     case $mime_type in
@@ -81,11 +101,14 @@ while true; do
 
     kill $status_pid
 
+    passed=$((SECONDS - start_time))
+    time_lbl=$(print_time $passed)
+
     if [ $ret -ne 0 ]; then
-	idesh wm title "mk: $cmdl [ERROR]"
+        idesh wm title "mk: $cmdl ($time_lbl) [ERROR]"
         vim -S ${IDESH_PATH}/gr/vim/qfix.vim -c ":cfile $tmpfile"
     else
-	idesh wm title "mk: $cmdl [OK]"
+	idesh wm title "mk: $cmdl ($time_lbl) [OK]"
     fi
 
     echo "[Press ENTER to continue, 'c' change command line options, Ctrl-C for exit]"
