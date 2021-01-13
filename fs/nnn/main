@@ -1,8 +1,18 @@
 #!/bin/sh
 
-export NNN_PLUG='!:_idesh wm shell*;w:_idesh fs gocwd*;M:_idesh mk -p $nnn*;m:_idesh mk $nnn*;s:_idesh wm create idesh gr*;C:_idesh fs setcwd*;f:_idesh fs fzy-open*;d:_idesh fs fzy-cd*;L:_idesh wm create tig log*;'
+NNN_PLUG="${NNN_PLUG}!:_idesh wm shell*;"
+NNN_PLUG="${NNN_PLUG}w:_idesh fs gocwd*;"
+NNN_PLUG="${NNN_PLUG}M:_idesh mk -p \$nnn*;"
+NNN_PLUG="${NNN_PLUG}m:_idesh mk \$nnn*;"
+NNN_PLUG="${NNN_PLUG}s:_idesh wm create idesh gr*;"
+NNN_PLUG="${NNN_PLUG}C:_idesh fs setcwd*;"
+NNN_PLUG="${NNN_PLUG}f:_idesh fs fzy-open*;"
+NNN_PLUG="${NNN_PLUG}d:_idesh fs fzy-cd*;"
+NNN_PLUG="${NNN_PLUG}L:_idesh wm create tig log*;"
+
 export NNN_OPENER="${IDESH_PATH}/wm/${IDESH_WM}/open"
 export NNN_SEL=${IDESH_RUN_PATH}/nnn-sel-$$
+export NNN_PLUG
 
 while [ $# -ne 0 ]; do
     case $1 in
