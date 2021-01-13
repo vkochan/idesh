@@ -30,17 +30,26 @@ function! GetVisualSelection(mode)
 endfunction
 
 function! LoadAndCopy()
-    call system("touch " . g:copyfile)
     call system("mv " . g:copyfile . " " . expand("%") . "")
 endfunction
 
 function! YankSel()
     call writefile(GetVisualSelection(visualmode()), g:copyfile, "ab")
-    call writefile([" "], g:copyfile, "ab")
+    call writefile([" "], g:copyfile, "abs")
+    wincmd p
+    wincmd p
 endfunction
 
 function! YankLine()
-    call writefile([getline(".")], g:copyfile, "a")
+    call writefile([getline(".")], g:copyfile, "as")
+    wincmd p
+    wincmd p
+endfunction
+
+function! Init()
+    call system("touch " . g:copyfile)
+    execute "sp " . g:copyfile
+    wincmd p
 endfunction
 
 vmap y :<C-U> call YankSel()<Cr>
@@ -48,5 +57,8 @@ nmap y :<C-U> call YankLine()<Cr>
 nmap yy :<C-U> call YankLine()<Cr>
 
 set autoread
+au FocusGained,BufEnter * :checktime
+au CursorHold,CursorHoldI * checktime
 
+au VimEnter * call Init()
 au BufWinLeave dvtm-editor* call LoadAndCopy()
