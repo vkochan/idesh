@@ -7,5 +7,5 @@ sel=$(find -type f -not \( -path '*/\.git/*' -prune \) | fzy -s -l 20)
 idesh wm setmax off
 
 if [ -n "${sel}" ]; then
-    idesh wm open $sel
+    idesh ed open $sel
 fi

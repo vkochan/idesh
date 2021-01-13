@@ -7,9 +7,22 @@ fi
 
 cwd="$PWD"
 
-if [ "${1}" == "-c" ]; then
-   cwd=$2 
-   shift 2
-fi
+while [ $# -gt 0 ]; do
+    case ${1} in
+        "-c")
+            cwd=$2 
+            shift 2
+	    ;;
 
-echo "create \"${@}\" \"\" $cwd" > ${DVTM_CMD_FIFO}
+        "-t")
+            title=$2 
+            shift 2
+	    ;;
+
+	   *)
+            break
+            ;;
+    esac
+done
+
+echo "create \"${@}\" \"${title}\" $cwd" > ${DVTM_CMD_FIFO}

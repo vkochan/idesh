@@ -605,13 +605,13 @@ open() {
 
                 clear_screen
                 reset_terminal
-                idesh wm open "$1"
+                idesh ed open "$1"
                 setup_terminal
                 redraw
             ;;
 
             *)
-                idesh wm open "$1"
+                idesh ed open "$1"
             ;;
         esac
     fi

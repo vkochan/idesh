@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -n "${1}" ]; then
+    if [ -e ${IDESH_PATH}/ed/${1} ]; then
+        tool=$1
+        shift 1
+        ${IDESH_PATH}/ed/${tool} $@
+        exit $?
+    fi
+fi
+
+${IDESH_PATH}/wm/${IDESH_WM}/main $@
