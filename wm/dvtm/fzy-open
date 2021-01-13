@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-# Description: open file via dvtm found by fzy
-#
-# Shell: POSIX compliant
-# Author: Vadym Kochan
-
 if [ -z "$EDITOR" ]; then
     echo 'ERROR: $EDITOR is not set' | ${PAGER:-less}
     exit 2

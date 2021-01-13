@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# Description: Open selected file in new DVTM window
-#
-# Shell: POSIX compliant
-# Authors: Vadym Kochan <vadimj@gmail.com>
-
 if [ -z "$EDITOR" ]; then
     echo 'ERROR: $EDITOR is not set' | ${PAGER:-less}
     exit 2

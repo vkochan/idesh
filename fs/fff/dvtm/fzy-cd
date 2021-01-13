@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-# Description: cd to directory selected by fzy
-#
-# Shell: POSIX compliant
-# Author: Vadym Kochan
-
 if [ -z "$DVTM_CMD_FIFO" ]; then
     echo 'ERROR: $DVTM_CMD_FIFO is not set' | ${PAGER:-less}
     exit 2

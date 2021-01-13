@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-# Description: cd to cwd of current tag
-#
-# Shell: POSIX compliant
-# Author: Vadym Kochan
-
 if [ -z "$NNN_PIPE" ]; then
     echo 'ERROR: $NNN_PIPE is not set' | ${PAGER:-less}
     exit 2
