@@ -83,7 +83,7 @@ while true; do
 
     if [ $ret -ne 0 ]; then
 	idesh wm title "mk: $cmdl [ERROR]"
-        vim -S ${IDESH_PATH}/gr/vim/search.vim -c ":copen" -q <(cat $tmpfile)
+        vim -S ${IDESH_PATH}/gr/vim/qfix.vim -c ":cfile $tmpfile"
     else
 	idesh wm title "mk: $cmdl [OK]"
     fi
