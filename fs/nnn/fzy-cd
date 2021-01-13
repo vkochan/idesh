@@ -9,11 +9,11 @@ if [ -z "$NNN_PIPE" ]; then
     exit 2
 fi
 
-printf "setlayout \"[ ]\"\n" > ${DVTM_CMD_FIFO}
+idesh wm setmax on
 
 sel=$(find -type d -not \( -path '*/\.git*' -prune \) | fzy -s -l 20)
 
-printf "setlayout\n" > ${DVTM_CMD_FIFO}
+idesh wm setmax off
 
 if [ -n "${sel}" ]; then
     path=$(readlink -f $sel)

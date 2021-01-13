@@ -16,13 +16,7 @@ export NNN_PLUG
 
 while [ $# -ne 0 ]; do
     case $1 in
-	"fzy-cd")
-		cmd=${1}
-		shift 1
-		${IDESH_PATH}/fs/${IDESH_FS}/${IDESH_WM}/${cmd} $@
-		exit $?
-		;;
-	"gocwd")
+	"gocwd"|"fzy-cd")
 		cmd=${1}
 		shift 1
 		${IDESH_PATH}/fs/${IDESH_FS}/${cmd} $@

@@ -1,4 +1,4 @@
-NNN_SCRIPTS = main gocwd dvtm/fzy-cd
+NNN_SCRIPTS = main gocwd fzy-cd
 
 .PHONY: all install
 
