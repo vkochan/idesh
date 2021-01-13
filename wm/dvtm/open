@@ -16,5 +16,6 @@ else
 fi
 
 title="${1/#${PWD}\//}"
+title="${title/#\.\//}"
 
-printf "create \"$EDITOR ${1}${line}\" ${title}\n" > ${DVTM_CMD_FIFO}
+printf "create \"$EDITOR ${1}${line}\" ${title} ${PWD}\n" > ${DVTM_CMD_FIFO}
