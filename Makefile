@@ -1,4 +1,4 @@
-PREFIX ?= /usr/local
+export PREFIX ?= /usr/local
 
 export IDESH_PATH = $(DESTDIR)$(PREFIX)/share/idesh
 export INSTALL = install

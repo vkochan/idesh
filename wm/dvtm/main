@@ -3,6 +3,7 @@
 export DVTM_STATUS_FIFO=${IDESH_RUN_PATH}/dvtm-status-fifo
 export DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
 export DVTM_EVT_FIFO=${IDESH_RUN_PATH}/dvtm-evt-fifo
+export DVTM_COPY_EDITOR="dvtm-copy"
 DVTM_SCRIPTS=${IDESH_PATH}/wm/dvtm
 
 if [ $# -ne 0 ]; then

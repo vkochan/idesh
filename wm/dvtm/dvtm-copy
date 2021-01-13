@@ -1,0 +1,3 @@
+#!/bin/sh
+
+vim -S ${IDESH_PATH}/wm/dvtm/vim/yank.vim $1 $2
