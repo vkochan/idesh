@@ -9,6 +9,7 @@ $(FS):
 	$(MAKE) -C $@
 
 install: $(foreach fs,$(FS),install-$(fs))
+	install -Dm 0755 fzy-open $(IDESH_PATH)/fs/fzy-open
 	install -Dm 0755 main $(IDESH_PATH)/fs/main
 
 install-fff:

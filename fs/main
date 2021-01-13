@@ -1,3 +1,12 @@
 #!/bin/sh
 
+if [ -n "${1}" ]; then
+    if [ -e ${IDESH_PATH}/fs/${1} ]; then
+        tool=$1
+        shift 1
+        ${IDESH_PATH}/fs/${tool} $@
+        exit $?
+    fi
+fi
+
 ${IDESH_PATH}/fs/${IDESH_FS}/main $@

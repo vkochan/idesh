@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "$DVTM_CMD_FIFO" ]; then
+    echo 'ERROR: $DVTM_CMD_FIFO is not set' | ${PAGER:-less}
+    exit 2
+fi
+
+if [ "${1}" == "on" ]; then
+    printf "setlayout \"[ ]\"\n" > ${DVTM_CMD_FIFO}
+else
+    printf "setlayout\n" > ${DVTM_CMD_FIFO}
+fi
