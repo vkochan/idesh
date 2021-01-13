@@ -22,7 +22,7 @@ idesh wm title "grep: $search"
 
 IDESH_GREP_TMP=/tmp/idesh-grep.$$
 
-${IDESH_GREP_CMD} ${search} > ${IDESH_GREP_TMP}
+${IDESH_GREP_CMD} "${search}" > ${IDESH_GREP_TMP}
 if [ $? -ne 0 ]; then
     rm -f ${IDESH_GREP_TMP}
     echo "No matches found :-(, press Enter to exit"
