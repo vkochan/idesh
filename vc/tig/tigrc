@@ -1,0 +1,6 @@
+# Tig default configuration
+#
+# Please see 'man tigrc' for a complete reference.
+
+set refresh-mode		= periodic	# Enum: manual, auto, after-command, periodic
+set refresh-interval		= 5		# Interval in seconds between refreshes

@@ -18,4 +18,7 @@ if [ $# -ne 0 ]; then
 fi
 
 trap 'rm -rf "$IDESH_RUN_PATH"' EXIT
+
+source ${IDESH_PATH}/vc/init
+
 ${IDESH_PATH}/wm/main
