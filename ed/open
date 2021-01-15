@@ -11,7 +11,9 @@ else
     line=""
 fi
 
-title="${1/#${PWD}\//}"
+cwd=$(idesh wm getcwd)
+
+title="${1/#${cwd}\//}"
 title="${title/#\.\//}"
 
 idesh wm create -t "${title}" ${EDITOR} "${1}${line}"

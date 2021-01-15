@@ -1,0 +1,3 @@
+#/bin/sh
+
+readlink -f "${IDESH_RUN_PATH}/tag/current/cwd"
