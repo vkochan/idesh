@@ -1,0 +1,40 @@
+#!/bin/sh
+
+sel=${NNN_SEL}
+list=$(mktemp)
+
+trap "rm -f '$list'" EXIT INT
+
+# temporary store selected patches
+cat $sel > $list
+ret=0
+
+# $1 - patch
+apply_one() {
+    title="${1/#${PWD}\//}"
+    title="${title/#\.\//}"
+
+    echo "Applying $title ..."
+    patch -p1 < $1 || ret=$?
+}
+
+while true; do
+
+    for p in $(cat $list | xargs -0); do
+        if [ -d "$p" ]; then
+            for f in $p/*.patch; do
+                apply_one $f
+            done
+        else
+            apply_one $p
+        fi
+    done
+
+    if [ $ret -ne 0 ]; then
+        read -p "Some patches did not applied successfully. Re-apply ? y/n" cont
+        [ "${cont}" == "y" ] && continue
+        exit $ret
+    else
+        exit
+    fi
+done
