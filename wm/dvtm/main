@@ -73,8 +73,7 @@ dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO} -s ${DVTM_STATUS_FIFO} \
 	-b "${DVTM_GIT_REFS_CMD}" \
 	-b "${DVTM_FS_SHOW_CMD}" \
 	-b "${DVTM_FZ_OPEN_CMD}" \
-	-b "${DVTM_GREP_CMD}" \
-	-m ' '
+	-b "${DVTM_GREP_CMD}"
 
 kill ${DVTM_EVENTS_PID} 2> /dev/null
 kill ${DVTM_STATUS_PID} 2> /dev/null
