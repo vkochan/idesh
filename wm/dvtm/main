@@ -43,6 +43,7 @@ DVTM_GIT_REFS_CMD=$(printf "^Xgr:c:create \"tig refs\" \"git: refs\"")
 DVTM_FS_SHOW_CMD=$(printf "^Xft:c:create \"idesh fs\"")
 DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs fzy-open\" fzy-open")
 DVTM_GREP_CMD=$(printf "^Xfs:c:create \"idesh gr\"")
+DVTM_RUN_CMD=$(printf "^Xr:c:create \"idesh wm run\"" \"\")
 
 mkdir ${IDESH_RUN_PATH}/tag
 
@@ -73,7 +74,8 @@ dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO} -s ${DVTM_STATUS_FIFO} \
 	-b "${DVTM_GIT_REFS_CMD}" \
 	-b "${DVTM_FS_SHOW_CMD}" \
 	-b "${DVTM_FZ_OPEN_CMD}" \
-	-b "${DVTM_GREP_CMD}"
+	-b "${DVTM_GREP_CMD}" \
+	-b "${DVTM_RUN_CMD}"
 
 kill ${DVTM_EVENTS_PID} 2> /dev/null
 kill ${DVTM_STATUS_PID} 2> /dev/null

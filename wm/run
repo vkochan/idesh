@@ -1,0 +1,16 @@
+#!/bin/sh
+
+out="$(mktemp)"
+
+idesh wm title "run:"
+
+IFS=':'
+for p in $PATH; do
+    find $p -type f -perm /+x -printf "%f\n" 2> /dev/null >> $out
+done
+
+app="$(cat $out | sort | uniq | fzy)"
+
+idesh wm title "$app"
+
+[ -n "$app" ] && $app
