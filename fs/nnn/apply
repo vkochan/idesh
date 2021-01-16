@@ -9,14 +9,20 @@ trap "rm -f '$list'" EXIT INT
 cat $sel > $list
 ret=0
 
+cmd="patch -p1 -i"
+
 # $1 - patch
 apply_one() {
     title="${1/#${PWD}\//}"
     title="${title/#\.\//}"
 
     echo "Applying $title ..."
-    patch -p1 < $1 || ret=$?
+    $cmd $1 || ret=$?
 }
+
+if [ "$1" == "--vc" ]; then
+    cmd="git am"
+fi
 
 while true; do
 
