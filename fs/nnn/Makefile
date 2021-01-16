@@ -1,4 +1,4 @@
-NNN_SCRIPTS = main gocwd fzy-cd apply
+NNN_SCRIPTS = main gocwd fzy-cd
 
 .PHONY: all install
 

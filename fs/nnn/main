@@ -9,15 +9,15 @@ NNN_PLUG="${NNN_PLUG}C:_idesh fs setcwd*;"
 NNN_PLUG="${NNN_PLUG}f:_idesh fs fzy-open*;"
 NNN_PLUG="${NNN_PLUG}d:_idesh fs fzy-cd*;"
 NNN_PLUG="${NNN_PLUG}L:_idesh wm create tig log*;"
-NNN_PLUG="${NNN_PLUG}a:_idesh fs apply*;"
-NNN_PLUG="${NNN_PLUG}A:_idesh fs apply --vc*;"
+NNN_PLUG="${NNN_PLUG}a:_idesh vc apply*;"
+NNN_PLUG="${NNN_PLUG}A:_idesh vc apply --vc*;"
 
 export NNN_OPENER="${IDESH_PATH}/ed/open"
 export NNN_PLUG
 
 while [ $# -ne 0 ]; do
     case $1 in
-	"apply"|"gocwd"|"fzy-cd")
+	"gocwd"|"fzy-cd")
 		cmd=${1}
 		shift 1
 		${IDESH_PATH}/fs/${IDESH_FS}/${cmd} $@

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -n "${1}" ]; then
+    if [ -e ${IDESH_PATH}/vc/${1} ]; then
+        cmd=$1
+        shift 1
+        ${IDESH_PATH}/vc/${cmd} $@
+        exit $?
+    fi
+fi
+
+${IDESH_PATH}/vc/${IDESH_VC}/main $@
