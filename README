@@ -6,11 +6,13 @@ Requirements:
 
     2) evtm - https://github.com/vkochan/evtm
 
-    3) vim (for grep support)
+    3) vim (for editing)
 
     4) fzy (for fuzzy file find)
 
     5) nnn (for file browsing)
+
+    6) tig (for git usage)
 
 
 Installation:
