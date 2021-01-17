@@ -1,0 +1,28 @@
+#!/bin/sh
+
+IDESH_CSCOPE_PATH="${PWD}"
+
+do_index() {
+    mkdir $IDESH_CSCOPE_PATH -p
+
+    find $PWD \
+	    -name '*.aidl' \
+	    -o -name '*.cc' \
+	    -o -name '*.h' \
+	    -o -name '*.c' -o \
+	    -name '*.cpp' -o \
+	    -name '*.java' \
+	    -o -name '*.py' > $IDESH_CSCOPE_PATH/cscope.files
+
+    cscope -bkq -i $IDESH_CSCOPE_PATH/cscope.files \
+	    -f $IDESH_CSCOPE_PATH/cscope.db
+}
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        "index")
+                do_index $@
+                ;;
+    esac
+    shift 1
+done

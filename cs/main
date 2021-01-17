@@ -1,0 +1,3 @@
+#!/bin/sh
+
+${IDESH_PATH}/cs/${IDESH_CS}/main $@

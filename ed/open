@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -z "$EDITOR" ]; then
-    echo 'ERROR: $EDITOR is not set' | ${PAGER:-less}
-    exit 2
-fi
-
 if [ -n "$2" ]; then
     line=" +$2"
 else
@@ -16,4 +11,4 @@ cwd=$(idesh wm getcwd)
 title="${1/#${cwd}\//}"
 title="${title/#\.\//}"
 
-idesh wm create -t "edit:${title}" ${EDITOR} "${1}${line}"
+idesh wm create -t "edit:${title}" "vim -S ${IDESH_PATH}/ed/vim/idesh.vim ${1}${line}"

@@ -8,6 +8,7 @@ export IDESH_PATH=${IDESH_PREFIX}/share/idesh
 export IDESH_WM=dvtm
 export IDESH_VC=tig
 export IDESH_FS=nnn
+export IDESH_CS=cscope
 
 mkdir -p ${IDESH_RUN_PATH}
 

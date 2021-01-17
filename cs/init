@@ -1,0 +1,3 @@
+#!/bin/sh
+
+export CSCOPE_DB=${IDESH_PATH}/vc/tig/tigrc

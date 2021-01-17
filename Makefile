@@ -3,7 +3,7 @@ export PREFIX ?= /usr/local
 export IDESH_PATH = $(DESTDIR)$(PREFIX)/share/idesh
 export INSTALL = install
 
-MODULES := wm fs gr mk ed vc
+MODULES := wm fs gr mk ed vc cs
 
 .PHONY: all install $(MODULES) install-modules $(foreach m,$(MODULES),install-$(m))
 
@@ -32,6 +32,9 @@ install-ed:
 
 install-vc:
 	$(MAKE) -C vc install
+
+install-cs:
+	$(MAKE) -C cs install
 
 install: install-modules
 	$(INSTALL) -Dm 0755 idesh $(DESTDIR)$(PREFIX)/bin/idesh
