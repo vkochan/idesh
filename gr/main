@@ -39,4 +39,4 @@ fi
 sort ${IDESH_GREP_RECENT} | uniq > ${HOME}/.cache/idesh/search/recent.$$
 mv ${HOME}/.cache/idesh/search/recent.$$ ${IDESH_GREP_RECENT}
 
-vim -S ${IDESH_PATH}/gr/vim/qfix.vim -c ":cfile ${IDESH_GREP_TMP}"
+vim -S ${IDESH_PATH}/ed/vim/qfix.vim -c ":cfile ${IDESH_GREP_TMP}"

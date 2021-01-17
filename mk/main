@@ -106,7 +106,7 @@ while true; do
 
     if [ $ret -ne 0 ]; then
         idesh wm title "mk: $cmdl ($time_lbl) [ERROR]"
-        vim -S ${IDESH_PATH}/gr/vim/qfix.vim -c ":cgetfile $tmpfile"
+        vim -S ${IDESH_PATH}/ed/vim/qfix.vim -c ":cgetfile $tmpfile"
     else
 	idesh wm title "mk: $cmdl ($time_lbl) [OK]"
     fi
