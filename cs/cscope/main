@@ -1,6 +1,6 @@
 #!/bin/sh
 
-IDESH_CSCOPE_PATH="${PWD}"
+IDESH_CSCOPE_PATH="${PWD}/.idesh/cscope"
 
 do_index() {
     mkdir $IDESH_CSCOPE_PATH -p
@@ -18,11 +18,47 @@ do_index() {
 	    -f $IDESH_CSCOPE_PATH/cscope.db
 }
 
+do_find() {
+    ctype="0"
+
+    case $1 in
+        -s) ctype="0"; shift 1;;
+	-g) ctype="1"; shift 1;;
+	-d) ctype="2"; shift 1;;
+	-c) ctype="3"; shift 1;;
+	-i) ctype="8"; shift 1;;
+	-a) ctype="9"; shift 1;;
+    esac
+
+    idesh wm title "symbol:"
+
+    search=$1
+    if [ $# -eq 0 ]; then
+        read -e -p 'symbol: ' search
+    fi
+
+    idesh wm title "symbol: $search"
+
+    IDESH_CS_TMP=/tmp/idesh-cs.$$
+
+    IDESH_CS_CMD="cscope -k -i ${IDESH_CSCOPE_PATH}/cscope.files -f ${IDESH_CSCOPE_PATH}/cscope.db"
+    ${IDESH_CS_CMD} -L$ctype "${search}" |\
+	    awk '{ printf "%s:%s: <%s>", $1,$3,$2; $1=$2=$3=""; print}' > ${IDESH_CS_TMP}
+
+    vim -S ${IDESH_PATH}/ed/vim/qfix.vim -c ":cfile ${IDESH_CS_TMP}"
+}
+
 while [ $# -gt 0 ]; do
     case "$1" in
         "index")
                 do_index $@
+                exit $?
                 ;;
+	"find")
+                shift 1
+                do_find $@
+                exit $?
+		;;
     esac
     shift 1
 done
