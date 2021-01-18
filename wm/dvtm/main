@@ -44,7 +44,12 @@ DVTM_FS_SHOW_CMD=$(printf "^Xft:c:create \"idesh fs\"")
 DVTM_FZ_OPEN_CMD=$(printf "^Xff:c:create \"idesh fs fzy-open\" fzy-open")
 DVTM_GREP_CMD=$(printf "^Xfs:c:create \"idesh gr\"")
 DVTM_RUN_CMD=$(printf "^Xr:c:create \"idesh wm run\"" \"\")
-DVTM_CS_INDEX_CMD=$(printf "^Xci:c:create \"idesh cs index\"" \"\")
+DVTM_CS_INDEX_CMD=$(printf "^XcI:c:create \"idesh cs index\"" \"\")
+DVTM_CS_SYMB_CMD=$(printf "^Xcs:c:create \"idesh cs find -s\"" \"\")
+DVTM_CS_DEF_CMD=$(printf "^Xcg:c:create \"idesh cs find -g\"" \"\")
+DVTM_CS_CALLS_CMD=$(printf "^Xcd:c:create \"idesh cs find -d\"" \"\")
+DVTM_CS_CALLED_CMD=$(printf "^Xcc:c:create \"idesh cs find -c\"" \"\")
+DVTM_CS_INCLUD_CMD=$(printf "^Xci:c:create \"idesh cs find -i\"" \"\")
 
 mkdir ${IDESH_RUN_PATH}/tag
 
@@ -77,7 +82,13 @@ dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO} -s ${DVTM_STATUS_FIFO} \
 	-b "${DVTM_FZ_OPEN_CMD}" \
 	-b "${DVTM_GREP_CMD}" \
 	-b "${DVTM_RUN_CMD}" \
-	-b "${DVTM_CS_INDEX_CMD}"
+	-b "${DVTM_CS_INDEX_CMD}" \
+	-b "${DVTM_CS_SYMB_CMD}" \
+	-b "${DVTM_CS_DEF_CMD}" \
+	-b "${DVTM_CS_CALLS_CMD}" \
+	-b "${DVTM_CS_CALLED_CMD}" \
+	-b "${DVTM_CS_INCLUD_CMD}"
+
 
 kill ${DVTM_EVENTS_PID} 2> /dev/null
 kill ${DVTM_STATUS_PID} 2> /dev/null
