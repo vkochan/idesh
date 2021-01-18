@@ -4,3 +4,5 @@
 
 set refresh-mode		= periodic	# Enum: manual, auto, after-command, periodic
 set refresh-interval		= 5		# Interval in seconds between refreshes
+
+bind main       R       !idesh vc review %(commit) 

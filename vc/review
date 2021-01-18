@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ref=$1
+rev=$(git rev-parse --short=12 $ref)
+title=$(git log -1 --oneline --no-decorate --abbrev-commit --abbrev=12 $ref)
+name=${title:0:20}
+
+files=$(git show --pretty="" --name-only $ref)
+
+git checkout $ref
+
+rm -rf /tmp/idesh/vc/review/$rev
+mkdir -p /tmp/idesh/vc/review/$rev
+
+for f in $files; do
+    prev=/tmp/idesh/vc/review/$rev/$(basename $f).$$
+    git show $ref~1:$f > $prev
+    idesh wm create -t "review:$rev:$f" "vim -d $prev $f"
+done
+
+read -p "Press ENTER after finsh"
+rm -rf /tmp/idesh/vc/review/$rev
+git checkout @{-1}
