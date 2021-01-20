@@ -1,5 +1,3 @@
-let g:copyfile = tempname()
-
 function! GetVisualSelection(mode)
     " call with visualmode() as the argument
     let [line_start, column_start] = getpos("'<")[1:2]
@@ -29,36 +27,48 @@ function! GetVisualSelection(mode)
     return lines
 endfunction
 
-function! LoadAndCopy()
-    call system("mv " . g:copyfile . " " . expand("%") . "")
+function! Idesh_OpenCopy(buf, scr, pos)
+    let g:idesh_file_buf = a:buf
+    let g:idesh_file_scr = a:scr
+
+    let w:is_scr = 1
+    execute "e " . a:scr
+    execute "set ro"
+
+    execute "sp " . a:buf
+    let w:is_scr = 0
+    wincmd p
+    execute ":" . a:pos
 endfunction
 
-function! YankSel()
-    call writefile(GetVisualSelection(visualmode()), g:copyfile, "ab")
-    call writefile([" "], g:copyfile, "abs")
-    wincmd p
-    wincmd p
+function! Idesh_YankSel()
+    let l:idesh_buf_begin = 1
+    if w:is_scr == 1
+        wincmd p
+        if col(".") > 1
+            let l:idesh_buf_begin = 0
+        endif
+        wincmd p
+        if l:idesh_buf_begin == 0
+            call writefile([" "], g:idesh_file_buf, "abs")
+        endif
+        call writefile(GetVisualSelection(visualmode()), g:idesh_file_buf, "ab")
+        wincmd p
+        wincmd p
+    endif
 endfunction
 
-function! YankLine()
-    call writefile([getline(".")], g:copyfile, "as")
-    wincmd p
-    wincmd p
+function! Idesh_YankLine()
+    if w:is_scr == 1
+        call writefile(["", getline(".")], g:idesh_file_buf, "as")
+        wincmd p
+        wincmd p
+    endif
 endfunction
-
-function! Init()
-    call system("touch " . g:copyfile)
-    execute "sp " . g:copyfile
-    wincmd p
-endfunction
-
-vmap y :<C-U> call YankSel()<Cr>
-nmap y :<C-U> call YankLine()<Cr>
-nmap yy :<C-U> call YankLine()<Cr>
 
 set autoread
 au FocusGained,BufEnter * :checktime
 au CursorHold,CursorHoldI * checktime
 
-au VimEnter * call Init()
-au BufWinLeave dvtm-editor* call LoadAndCopy()
+vmap y :<C-U> call Idesh_YankSel()<Cr>
+nmap yy :<C-U> call Idesh_YankLine()<Cr>

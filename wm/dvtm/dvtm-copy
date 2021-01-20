@@ -1,3 +1,16 @@
 #!/bin/sh
 
-vim -S ${IDESH_PATH}/wm/dvtm/vim/yank.vim $1 $2
+cpy_file="/tmp/idesh-copy-buf.$$"
+scr_file="/tmp/idesh-screen.$$"
+touch $cpy_file
+touch $scr_file
+
+trap 'rm -f $cpy_file -f $scr_file' INT EXIT
+
+cat $2 > $scr_file
+
+vim -S ${IDESH_PATH}/wm/dvtm/vim/yank.vim \
+	-c "call Idesh_OpenCopy(\"$cpy_file\",\"$scr_file\",\"$1\")"
+cat $cpy_file > $2
+rm -f $cpy_file
+rm -f $scr_file
