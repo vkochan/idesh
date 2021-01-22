@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-IDESH_CSCOPE_PATH="${PWD}/.idesh/cscope"
+IDESH_CSCOPE_PATH="${PWD}/.idesh/cs/cscope"
+IDESH_CS_RECENT="${PWD}/.idesh/cs/recent"
 
 do_index() {
     mkdir $IDESH_CSCOPE_PATH -p
@@ -18,7 +19,17 @@ do_index() {
 	    -f $IDESH_CSCOPE_PATH/cscope.db
 }
 
+select_recent() {
+    READLINE_LINE=$(cat ${IDESH_CS_RECENT} | fzy)
+}
+
 do_find() {
+    mkdir $IDESH_CSCOPE_PATH -p
+
+    touch ${IDESH_CS_RECENT}
+
+    bind -x '"\C-r":select_recent' 2> /dev/null
+
     ctype="0"
 
     case $1 in
@@ -34,6 +45,8 @@ do_find() {
 
     search=$1
     if [ $# -eq 0 ]; then
+        echo "[Ctrl-R to select recent searched symbol]"
+        echo ""
         read -e -p 'symbol: ' search
     fi
 
@@ -44,6 +57,15 @@ do_find() {
     IDESH_CS_CMD="cscope -k -i ${IDESH_CSCOPE_PATH}/cscope.files -f ${IDESH_CSCOPE_PATH}/cscope.db"
     ${IDESH_CS_CMD} -L$ctype "${search}" |\
 	    awk '{ printf "%s:%s: <%s>", $1,$3,$2; $1=$2=$3=""; print}' > ${IDESH_CS_TMP}
+
+    if [ -s "${IDESH_CS_RECENT}" ]; then
+        sed -i -e "0,/^/s//${search}\n/;20d" ${IDESH_CS_RECENT}
+    else
+        echo ${search} > ${IDESH_CS_RECENT}
+    fi
+
+    sort ${IDESH_CS_RECENT} | uniq > ${PWD}/.idesh/cs/recent.$$
+    mv ${PWD}/.idesh/cs/recent.$$ ${IDESH_CS_RECENT}
 
     vim -S ${IDESH_PATH}/ed/vim/qfix.vim -c ":cfile ${IDESH_CS_TMP}"
 }
