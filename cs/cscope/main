@@ -5,7 +5,7 @@ IDESH_CSCOPE_PATH="${PWD}/.idesh/cscope"
 do_index() {
     mkdir $IDESH_CSCOPE_PATH -p
 
-    find $PWD \
+    find . \
 	    -name '*.aidl' \
 	    -o -name '*.cc' \
 	    -o -name '*.h' \
