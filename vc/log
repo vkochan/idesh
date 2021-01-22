@@ -1,0 +1,3 @@
+#!/bin/sh
+
+idesh wm create "tig log $1"
