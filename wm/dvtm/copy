@@ -3,8 +3,12 @@
 copy_put() {
     local in="-"
 
-    if [ "$1" == "-f" -a -s "$2" ]; then
-        in="$2"
+    if [ "$1" == "-f" ]; then
+        if [ -s "$2" ]; then
+            in="$2"
+        fi
+    else
+        return
     fi
 
     echo "copybuf put" > ${DVTM_CMD_FIFO}
