@@ -1,4 +1,15 @@
-DVTM_SCRIPTS = main create setmax main open setcwd getcwd events title tagname shell
+DVTM_SCRIPTS = main \
+	       copy \
+	       create \
+	       setmax \
+	       main \
+	       open \
+	       setcwd \
+	       getcwd \
+	       events \
+	       title \
+	       tagname \
+	       shell
 
 .PHONY: all
 

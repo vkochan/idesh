@@ -1,0 +1,19 @@
+#!/bin/sh
+
+copy_put() {
+    local in="-"
+
+    if [ "$1" == "-f" -a -s "$2" ]; then
+        in="$2"
+    fi
+
+    echo "copybuf put" > ${DVTM_CMD_FIFO}
+    cat "$in" > ${DVTM_CPY_FIFO}
+}
+
+case "$1" in
+    "put")
+         shift 1
+	 copy_put $@
+         ;;
+esac
