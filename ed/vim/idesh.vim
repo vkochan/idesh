@@ -43,5 +43,5 @@ function! Idesh_YankLine()
     let @0 = getline(".")
 endfunction
 
-vmap y :<C-U> silent call Idesh_YankSel()<Cr>
-nmap yy :<C-U> silent call Idesh_YankLine()<Cr>
+vmap <C-y> :<C-U> silent call Idesh_YankSel()<Cr>
+nmap <C-y> :<C-U> silent call Idesh_YankLine()<Cr>
