@@ -71,7 +71,7 @@ while true; do
     idesh wm title "mk: $@ $options ..."
 
     if [ "${options_prompt}" == "y" ]; then
-        read -p "options: " options
+        read -e -p "options: " options
 	options_prompt=n
     fi
 
