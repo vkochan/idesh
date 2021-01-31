@@ -1,0 +1,3 @@
+#!/bin/sh
+
+idesh wm create "git diff --color=always $1 | less --RAW-CONTROL-CHARS"

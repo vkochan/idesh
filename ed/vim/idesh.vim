@@ -48,3 +48,4 @@ nmap <C-y> :<C-U> silent call Idesh_YankLine()<CR>
 
 nmap <C-e>gB :<C-U> call system("idesh vc blame " . expand('%:t'))<CR>
 nmap <C-e>gb :<C-U> call system("idesh vc blame " . expand('%:t') . " -L" . line(".") . ",+1")<CR>
+nmap <C-e>gd :<C-U> call system("idesh vc diff " . expand('%:t'))<CR>
