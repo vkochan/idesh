@@ -43,5 +43,8 @@ function! Idesh_YankLine()
     let @0 = getline(".")
 endfunction
 
-vmap <C-y> :<C-U> silent call Idesh_YankSel()<Cr>
-nmap <C-y> :<C-U> silent call Idesh_YankLine()<Cr>
+vmap <C-y> :<C-U> silent call Idesh_YankSel()<CR>
+nmap <C-y> :<C-U> silent call Idesh_YankLine()<CR>
+
+nmap <C-e>gB :<C-U> call system("idesh vc blame " . expand('%:t'))<CR>
+nmap <C-e>gb :<C-U> call system("idesh vc blame " . expand('%:t') . " -L" . line(".") . ",+1")<CR>

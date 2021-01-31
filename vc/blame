@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cwd=$(idesh wm getcwd)
+
+path="${1/#${cwd}\//}"
+path="${path/#\.\//}"
+shift 1
+
+echo idesh wm create -t "blame:$path" "tig blame $@ $path" > /tmp/dbg
+idesh wm create -t "blame:$path" "tig blame $@ $path"

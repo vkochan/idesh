@@ -9,6 +9,7 @@ NNN_PLUG="${NNN_PLUG}C:_idesh fs setcwd*;"
 NNN_PLUG="${NNN_PLUG}f:_idesh fs fzy-open*;"
 NNN_PLUG="${NNN_PLUG}d:_idesh fs fzy-cd*;"
 NNN_PLUG="${NNN_PLUG}L:_idesh vc log \$nnn*;"
+NNN_PLUG="${NNN_PLUG}B:_idesh vc blame \$nnn*;"
 NNN_PLUG="${NNN_PLUG}a:_idesh vc apply*;"
 NNN_PLUG="${NNN_PLUG}A:_idesh vc apply --vc*;"
 
