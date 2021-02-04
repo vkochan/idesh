@@ -6,5 +6,6 @@ all:
 install:
 	$(INSTALL) -D vim/qfix.vim $(IDESH_PATH)/ed/vim/qfix.vim
 	$(INSTALL) -D vim/idesh.vim $(IDESH_PATH)/ed/vim/idesh.vim
+	$(INSTALL) -D vim/copybuf.vim $(IDESH_PATH)/ed/vim/copybuf.vim
 	$(INSTALL) -Dm 0755 open $(IDESH_PATH)/ed/open
 	$(INSTALL) -Dm 0755 main $(IDESH_PATH)/ed/main
