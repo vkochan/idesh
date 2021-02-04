@@ -27,21 +27,7 @@ function! GetVisualSelection(mode)
     return lines
 endfunction
 
-function! Idesh_OpenCopy(buf, scr, pos)
-    let g:idesh_file_buf = a:buf
-    let g:idesh_file_scr = a:scr
-
-    let w:is_scr = 1
-    execute "e " . a:scr
-    execute "set ro"
-
-    execute "sp " . a:buf
-    let w:is_scr = 0
-    wincmd p
-    execute ":" . a:pos
-endfunction
-
-function! Idesh_YankSel()
+function! Idesh_Copybuf_YankSel()
     let l:idesh_buf_begin = 1
     if w:is_scr == 1
         wincmd p
@@ -58,7 +44,7 @@ function! Idesh_YankSel()
     endif
 endfunction
 
-function! Idesh_YankLine()
+function! Idesh_Copybuf_YankLine()
     if w:is_scr == 1
         call writefile(["", getline(".")], g:idesh_file_buf, "as")
         wincmd p
@@ -70,5 +56,19 @@ set autoread
 au FocusGained,BufEnter * :checktime
 au CursorHold,CursorHoldI * checktime
 
-vmap y :<C-U> call Idesh_YankSel()<Cr>
-nmap yy :<C-U> call Idesh_YankLine()<Cr>
+function! Idesh_Copybuf(buf, scr, pos)
+    let g:idesh_file_buf = a:buf
+    let g:idesh_file_scr = a:scr
+    let w:is_scr = 1
+
+    vmap y :<C-U> call Idesh_Copybuf_YankSel()<Cr>
+    nmap yy :<C-U> call Idesh_Copybuf_YankLine()<Cr>
+
+    execute "e " . a:scr
+    execute "set ro"
+
+    execute "sp " . a:buf
+    let w:is_scr = 0
+    wincmd p
+    execute ":" . a:pos
+endfunction

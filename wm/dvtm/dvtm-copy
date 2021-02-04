@@ -10,7 +10,7 @@ trap 'rm -f $cpy_file -f $scr_file' INT EXIT
 cat $2 > $scr_file
 
 vim -S ${IDESH_PATH}/ed/vim/copybuf.vim \
-	-c "call Idesh_OpenCopy(\"$cpy_file\",\"$scr_file\",\"$1\")"
+	-c "call Idesh_Copybuf(\"$cpy_file\",\"$scr_file\",\"$1\")"
 cat $cpy_file > $2
 rm -f $cpy_file
 rm -f $scr_file
