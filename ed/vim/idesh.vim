@@ -43,6 +43,52 @@ function! Idesh_YankLine()
     let @0 = getline(".")
 endfunction
 
+function! Idesh_Copybuf_YankSel()
+    let l:idesh_buf_begin = 1
+    if w:is_scr == 1
+        wincmd p
+        if col(".") > 1
+            let l:idesh_buf_begin = 0
+        endif
+        wincmd p
+        if l:idesh_buf_begin == 0
+            call writefile([" "], g:idesh_file_buf, "abs")
+        endif
+        call writefile(Idesh_GetVisualSelection(visualmode()), g:idesh_file_buf, "ab")
+        wincmd p
+        wincmd p
+    endif
+endfunction
+
+function! Idesh_Copybuf_YankLine()
+    if w:is_scr == 1
+        call writefile(["", getline(".")], g:idesh_file_buf, "as")
+        wincmd p
+        wincmd p
+    endif
+endfunction
+
+function! Idesh_Copybuf(buf, scr, pos)
+    let g:idesh_file_buf = a:buf
+    let g:idesh_file_scr = a:scr
+    let w:is_scr = 1
+
+    vmap y :<C-U> call Idesh_Copybuf_YankSel()<Cr>
+    nmap yy :<C-U> call Idesh_Copybuf_YankLine()<Cr>
+
+    execute "e " . a:scr
+    execute "set ro"
+
+    execute "sp " . a:buf
+    let w:is_scr = 0
+    wincmd p
+    execute ":" . a:pos
+endfunction
+
+set autoread
+au FocusGained,BufEnter * :checktime
+au CursorHold,CursorHoldI * checktime
+
 vmap <C-y> :<C-U> silent call Idesh_YankSel()<CR>
 nmap <C-y> :<C-U> silent call Idesh_YankLine()<CR>
 
