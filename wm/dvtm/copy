@@ -20,4 +20,7 @@ case "$1" in
          shift 1
 	 copy_put $@
          ;;
+    "get")
+         dvtm-cmd copybuf get
+	 ;;
 esac

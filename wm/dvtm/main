@@ -4,6 +4,7 @@ export DVTM_STATUS_FIFO=${IDESH_RUN_PATH}/dvtm-status-fifo
 export DVTM_CPY_FIFO=${IDESH_RUN_PATH}/dvtm-cpy-fifo
 export DVTM_CMD_FIFO=${IDESH_RUN_PATH}/dvtm-cmd-fifo
 export DVTM_EVT_FIFO=${IDESH_RUN_PATH}/dvtm-evt-fifo
+export DVTM_RET_FIFO=${IDESH_RUN_PATH}/dvtm-ret-fifo
 export DVTM_COPY_EDITOR="dvtm-copy"
 DVTM_SCRIPTS=${IDESH_PATH}/wm/dvtm
 
@@ -18,6 +19,7 @@ mkfifo ${DVTM_STATUS_FIFO}
 mkfifo ${DVTM_CMD_FIFO}
 mkfifo ${DVTM_CPY_FIFO}
 mkfifo ${DVTM_EVT_FIFO}
+mkfifo ${DVTM_RET_FIFO}
 
 dvtm_init() {
 cat << EOF > ${DVTM_CMD_FIFO}
@@ -77,6 +79,7 @@ DVTM_EVENTS_PID=$!
 
 dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO} -s ${DVTM_STATUS_FIFO} \
 	-y "${DVTM_CPY_FIFO}" \
+	-r "${DVTM_RET_FIFO}" \
 	-b "${DVTM_GIT_VIEW_CMD}" \
 	-b "${DVTM_GIT_LOG_CMD}" \
 	-b "${DVTM_GIT_STATUS_CMD}" \
