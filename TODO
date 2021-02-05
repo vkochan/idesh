@@ -1,0 +1,18 @@
+* Select recently opened files
+
+* Add key-binding to open editor with new file via 'idesh ed open'
+        - add global Ctrl-X- keybinding
+
+        - add nnn keybinding
+
+* Replace $DVTM_CMD_FIFO by dvtm-cmd
+
+* Save copybuf history with ability to open it with 'idesh ed open'
+
+* Add key-binding to copy recently copied buffer to X11 clipboard
+
+* Add vifm support
+
+* Add vis support ?
+
+* Add tmux support ?
