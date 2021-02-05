@@ -12,7 +12,7 @@ grep_recent() {
 }
 bind -x '"\C-r":grep_recent' 2> /dev/null
 
-IDESH_GREP_CMD="grep -rnI --exclude-dir=.git"
+IDESH_GREP_CMD="grep -rnI --exclude-dir=.git --exclude-dir=.idesh"
 
 echo "[Ctrl-R to select recent searched words]"
 echo ""
