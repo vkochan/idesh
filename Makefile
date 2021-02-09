@@ -39,3 +39,4 @@ install-cs:
 install: install-modules
 	$(INSTALL) -Dm 0755 idesh $(DESTDIR)$(PREFIX)/bin/idesh
 	$(INSTALL) -Dm 0755 idesh-mk $(DESTDIR)$(PREFIX)/bin/idesh-mk
+	$(INSTALL) -Dm 0755 idesh-ed $(DESTDIR)$(PREFIX)/bin/idesh-ed

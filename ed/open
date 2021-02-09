@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+new_window=y
+
+if [ "$1" == "-n" ]; then
+    new_window=n
+    shift 1
+fi
+
 if [ -n "$2" ]; then
     line=" +$2"
 else
@@ -11,4 +18,10 @@ cwd=$(idesh wm getcwd)
 title="${1/#${cwd}\//}"
 title="${title/#\.\//}"
 
-idesh wm create -t "edit:${title}" "vim -S ${IDESH_PATH}/ed/vim/idesh.vim ${1}${line}"
+cmd="vim -S ${IDESH_PATH}/ed/vim/idesh.vim ${1}${line}"
+
+if [ "${new_window}" == "y" ]; then
+    idesh wm create -t "edit:${title}" "${cmd}" 
+else
+    $cmd
+fi
