@@ -11,6 +11,13 @@ cat $2 > $scr_file
 
 vim -S ${IDESH_PATH}/ed/vim/idesh.vim \
 	-c "call Idesh_Copybuf(\"$cpy_file\",\"$scr_file\",\"$1\")"
+
 cat $cpy_file > $2
 rm -f $cpy_file
 rm -f $scr_file
+
+[ -s ${2} ] && {
+    cat ${2} > ${IDESH_RUN_PATH}/copy-cur
+
+    idesh wm copy log
+}

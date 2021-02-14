@@ -1,5 +1,14 @@
 #!/bin/sh
 
+copy_log() {
+    touch ${IDESH_RUN_PATH}/copy-log
+    cat ${IDESH_RUN_PATH}/copy-log > ${IDESH_RUN_PATH}/copy-tmp
+    cat ${IDESH_RUN_PATH}/copy-cur > ${IDESH_RUN_PATH}/copy-log
+    echo "" >> ${IDESH_RUN_PATH}/copy-log
+    echo "================================================================================" >> ${IDESH_RUN_PATH}/copy-log
+    cat ${IDESH_RUN_PATH}/copy-tmp >> ${IDESH_RUN_PATH}/copy-log
+}
+
 copy_put() {
     local in="-"
 
@@ -12,7 +21,9 @@ copy_put() {
     fi
 
     echo "copybuf put" > ${DVTM_CMD_FIFO}
-    cat "$in" > ${DVTM_CPY_FIFO}
+    cat "$in" > ${IDESH_RUN_PATH}/copy-cur
+    cat ${IDESH_RUN_PATH}/copy-cur > ${DVTM_CPY_FIFO}
+    copy_log
 }
 
 copy_edit() {
@@ -33,5 +44,8 @@ case "$1" in
 	 ;;
     "edit")
          copy_edit
+         ;;
+    "log")
+         copy_log
          ;;
 esac
