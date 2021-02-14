@@ -15,6 +15,14 @@ copy_put() {
     cat "$in" > ${DVTM_CPY_FIFO}
 }
 
+copy_edit() {
+    edit=/tmp/idesh-copy-edit.$$
+    dvtm-cmd copybuf get > $edit
+    idesh-ed $edit
+    echo "copybuf put" > ${DVTM_CMD_FIFO}
+    cat "$edit" > ${DVTM_CPY_FIFO}
+}
+
 case "$1" in
     "put")
          shift 1
@@ -23,4 +31,7 @@ case "$1" in
     "get")
          dvtm-cmd copybuf get
 	 ;;
+    "edit")
+         copy_edit
+         ;;
 esac
