@@ -56,6 +56,7 @@ DVTM_CS_CALLED_CMD=$(printf "^Xcc:c:create \"idesh cs find -c\"" \"\")
 DVTM_CS_INCLUD_CMD=$(printf "^Xci:c:create \"idesh cs find -i\"" \"\")
 DVTM_COPY_BUF_EDIT=$(printf "^Xye:c:create \"idesh wm copy edit\"" \"\")
 DVTM_COPY_HISTORY=$(printf "^Xyh:c:create \"idesh-ed ${IDESH_RUN_PATH}/copy-log\"" \"\")
+DVTM_COPY_GETLINE=$(printf "^Xyl:c:exec idesh wm copy getline")
 
 mkdir ${IDESH_RUN_PATH}/tag
 
@@ -97,7 +98,8 @@ dvtm -c ${DVTM_CMD_FIFO} -e ${DVTM_EVT_FIFO} -s ${DVTM_STATUS_FIFO} \
 	-b "${DVTM_CS_CALLED_CMD}" \
 	-b "${DVTM_CS_INCLUD_CMD}" \
 	-b "${DVTM_COPY_BUF_EDIT}" \
-	-b "${DVTM_COPY_HISTORY}"
+	-b "${DVTM_COPY_HISTORY}" \
+	-b "${DVTM_COPY_GETLINE}"
 
 
 kill ${DVTM_EVENTS_PID} 2> /dev/null

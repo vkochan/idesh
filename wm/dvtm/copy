@@ -34,6 +34,11 @@ copy_edit() {
     cat "$edit" > ${DVTM_CPY_FIFO}
 }
 
+copy_getline() {
+    line="$(dvtm-cmd copybuf get | fzy)"
+    [ -n "${line}" ] && dvtm-cmd sendtext "\"${line}\""
+}
+
 case "$1" in
     "put")
          shift 1
@@ -47,5 +52,8 @@ case "$1" in
          ;;
     "log")
          copy_log
+         ;;
+    "getline")
+         copy_getline
          ;;
 esac
