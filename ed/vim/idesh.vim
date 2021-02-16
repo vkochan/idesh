@@ -30,6 +30,12 @@ function! Idesh_GetVisualSelection(mode)
     return lines
 endfunction
 
+function! Idesh_Relpath(filename)
+    let cwd = systemlist("idesh wm getcwd")[0]
+    let s = substitute(a:filename, l:cwd . "/", "", "")
+    return l:s
+endfunction
+
 function! Idesh_YankSel()
     let l:sel = Idesh_GetVisualSelection(visualmode())
     call writefile(l:sel, g:Idesh_Copy_File)
@@ -41,6 +47,16 @@ function! Idesh_YankLine()
     call writefile(["", getline(".")], g:Idesh_Copy_File)
     call system("idesh wm copy put -f " . g:Idesh_Copy_File)
     let @0 = getline(".")
+endfunction
+
+function! Idesh_YankRelpath()
+    call writefile([Idesh_Relpath(expand("%:p"))], g:Idesh_Copy_File, "b")
+    call system("idesh wm copy put -f " . g:Idesh_Copy_File)
+endfunction
+
+function! Idesh_YankPath()
+    call writefile([expand("%:p")], g:Idesh_Copy_File, "b")
+    call system("idesh wm copy put -f " . g:Idesh_Copy_File)
 endfunction
 
 function! Idesh_Copybuf_YankSel()
@@ -90,7 +106,9 @@ au FocusGained,BufEnter * :checktime
 au CursorHold,CursorHoldI * checktime
 
 vmap <C-y> :<C-U> silent call Idesh_YankSel()<CR>
-nmap <C-y> :<C-U> silent call Idesh_YankLine()<CR>
+nmap <C-y>y :<C-U> silent call Idesh_YankLine()<CR>
+nmap <C-y>f :<C-U> silent call Idesh_YankRelpath()<CR>
+nmap <C-y>F :<C-U> silent call Idesh_YankPath()<CR>
 map <C-p> :r! idesh wm copy get<CR>
 
 nmap <C-e>gB :<C-U> call system("idesh vc blame " . expand('%:t'))<CR>
